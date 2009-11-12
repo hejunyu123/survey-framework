@@ -15,6 +15,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class LoginServiceImpl extends RemoteServiceServlet implements
     LoginService {
 
+	private static final long serialVersionUID = 8943138328986929525L;
+
 	/**
 	 * @return Beinhaltet den Login-Status, Userinformationen und die Login-/Logout-Uris.
 	 * @see gwttest.client.LoginService#login(java.lang.String)
