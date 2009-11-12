@@ -1,5 +1,9 @@
 package gwttest.client;
 
+import net.customware.gwt.presenter.client.DefaultEventBus;
+import gwttest.client.samplesurvey.MySampleSurveyPage;
+import gwttest.client.samplesurvey.MySampleSurveyPresenter;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -73,5 +77,11 @@ public class Gwttest implements EntryPoint {
 		RootPanel content = RootPanel.get("content");
 		content.add(new HTML("<h1>Easy Feedback</h1>"));
 		content.add(new InlineHTML("Hallo " + loginInfo.getNickname() + "!"));
+		
+		DefaultEventBus eventBus = new DefaultEventBus();
+		MySampleSurveyPage mSSPage = new MySampleSurveyPage();
+		MySampleSurveyPresenter mSSPresenter = new MySampleSurveyPresenter(mSSPage, eventBus);
+		mSSPresenter.bind();
+		content.add(mSSPage);
 	}
 }
