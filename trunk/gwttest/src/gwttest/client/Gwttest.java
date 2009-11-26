@@ -3,6 +3,7 @@ package gwttest.client;
 import net.customware.gwt.presenter.client.DefaultEventBus;
 import gwttest.client.samplesurvey.MySampleSurveyPage;
 import gwttest.client.samplesurvey.MySampleSurveyPresenter;
+import gwttest.client.samplesurvey.gin.MySampleSurveyGinjector;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -78,10 +79,15 @@ public class Gwttest implements EntryPoint {
 		content.add(new HTML("<h1>Easy Feedback</h1>"));
 		content.add(new InlineHTML("Hallo " + loginInfo.getNickname() + "!"));
 		
-		DefaultEventBus eventBus = new DefaultEventBus();
-		MySampleSurveyPage mSSPage = new MySampleSurveyPage();
-		MySampleSurveyPresenter mSSPresenter = new MySampleSurveyPresenter(mSSPage, eventBus);
+//		DefaultEventBus eventBus = new DefaultEventBus();
+//		MySampleSurveyPage mSSPage = new MySampleSurveyPage();
+//		MySampleSurveyPresenter mSSPresenter = new MySampleSurveyPresenter(mSSPage, eventBus);
+		// Ginjector erzeugen
+		MySampleSurveyGinjector ginjector = GWT.create(MySampleSurveyGinjector.class);
+		// MySampleSurvey Presenter von ginjector erzeugen lassen -> Nutzt GIN-Modul
+		MySampleSurveyPresenter mSSPresenter = ginjector.getPagePresenter();
+		// View initialisieren und an Oberfläche anhängen
 		mSSPresenter.bind();
-		content.add(mSSPage);
+		content.add(mSSPresenter.getDisplay().asWidget());
 	}
 }
