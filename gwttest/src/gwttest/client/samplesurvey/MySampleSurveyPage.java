@@ -2,26 +2,20 @@ package gwttest.client.samplesurvey;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-
-import net.customware.gwt.presenter.client.EventBus;
-import net.customware.gwt.presenter.client.place.Place;
-import net.customware.gwt.presenter.client.place.PlaceRequest;
-import net.customware.gwt.presenter.client.widget.WidgetDisplay;
-import net.customware.gwt.presenter.client.widget.WidgetPresenter;
 
 public class MySampleSurveyPage extends Composite implements MySampleSurveyPresenter.Display {
 
 	private static Panel root;
 	private static Label caption;
 	private static Label description;
+	private static Button btnMakePersistent;
 	
 	public class LabelHeading extends Label {
 		private int number;
@@ -80,6 +74,11 @@ public class MySampleSurveyPage extends Composite implements MySampleSurveyPrese
 	public HasText getDescription() {
 		// TODO Auto-generated method stub
 		return (HasText) description;
+	}
+
+	public HasClickHandlers getBtnMakePersistent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
