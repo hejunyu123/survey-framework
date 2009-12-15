@@ -1,12 +1,19 @@
 package gwttest.server;
 
-import gwttest.client.samplesurvey.helper.PMF;
 import gwttest.client.samplesurvey.model.Survey;
 import gwttest.client.samplesurvey.service.PersistenceService;
 
 import javax.jdo.PersistenceManager;
 
-public class PersistenceServiceImpl implements PersistenceService {
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+public class PersistenceServiceImpl extends RemoteServiceServlet implements PersistenceService {
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5609326171728515316L;
 	
 	/**
 	 * Manages transactions with the datastore.
