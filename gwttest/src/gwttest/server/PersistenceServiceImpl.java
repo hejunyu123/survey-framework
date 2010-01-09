@@ -1,9 +1,13 @@
 package gwttest.server;
 
+import java.util.Date;
+import java.util.List;
+
 import gwttest.client.samplesurvey.model.Survey;
 import gwttest.client.samplesurvey.service.PersistenceService;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -20,11 +24,22 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 	 */
 	private static final PersistenceManager pm = PMF.get().getPersistenceManager();
 
+	@SuppressWarnings("unchecked")
 	public Survey getSurvey(String name) {
-		return pm.getObjectById(Survey.class, name);
+		Query query = pm.newQuery("select from" + Survey.class.getName() +" where name =='"+name+"'");
+//		return pm.getObjectById(Survey.class, name);
+		List<Survey> results = (List<Survey>)query.execute();
+		return results.isEmpty() ? new Survey(name, null, 
+				new Date().toString(), new Date().toString()
+				) : results.get(0); //TODO debug
 	}
 
 	public void saveSurvey(Survey survey) {
+		Survey existingSurvey = this.getSurvey(survey.getName());
+		if (existingSurvey == null) {
+			
+		}
+		
 		pm.makePersistent(survey);
 		pm.close();
 	}
