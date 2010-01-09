@@ -1,5 +1,7 @@
 package gwttest.client.samplesurvey;
 
+import gwttest.client.samplesurvey.widget.LabelHeading;
+
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
@@ -16,25 +18,6 @@ public class MySampleSurveyPage extends Composite implements MySampleSurveyPrese
 	private static Label caption;
 	private static Label description;
 	private static Button btnMakePersistent;
-	
-	public class LabelHeading extends Label {
-		private int number;
-
-		public LabelHeading(int headingNumber) {
-			if (headingNumber <= 0) {
-				headingNumber = 1;
-			}
-			number = headingNumber;			
-		}
-		
-		public void setText(String text) {
-			DOM.setInnerHTML(this.getElement(), "<h"+number+">"+text+"</h"+number+">");
-		}		
-		
-		public String getText() {
-			return DOM.getFirstChild(this.getElement()).getInnerText();
-		}
-	}
 	
 	/**
 	 * Constructs the page

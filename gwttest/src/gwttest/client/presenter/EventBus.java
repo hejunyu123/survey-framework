@@ -16,4 +16,6 @@ public interface EventBus {
 	int getHandlerCount( Type<?> type );
 
 	boolean isEventHandled( Type<?> e );
+	
+	
 }

@@ -7,18 +7,20 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 public abstract class MyPresenter<T extends WidgetDisplay> implements ValueChangeHandler<String>{
 	
-	private T display;
+	private final T display;
+	private EventBus eventBus;
 
-	public MyPresenter(T display) {
-		this.setDisplay(display);
-	}
-	
-	protected void setDisplay(T display) {
+	public MyPresenter(T display, EventBus eventBus) {
 		this.display = display;
+		this.eventBus = eventBus;
 	}
-	
+
 	public T getDisplay() {
 		return display;
+	}
+	
+	public EventBus getEventBus() {
+		return eventBus;
 	}
 	
 	public void onValueChange(ValueChangeEvent<String> event) {
