@@ -9,5 +9,16 @@
   <welcome-file-list>
     <welcome-file>Gwttest.html</welcome-file>
   </welcome-file-list>
+  
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>persist</servlet-name>
+    <servlet-class>gwttest.server.PersistenceServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>persist</servlet-name>
+    <url-pattern>/gwttest/persist</url-pattern>
+  </servlet-mapping>
 
 </web-app>
