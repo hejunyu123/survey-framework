@@ -3,7 +3,6 @@ package gwttest.client.samplesurvey;
 import gwttest.client.samplesurvey.widget.LabelHeading;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
@@ -27,41 +26,39 @@ public class MySampleSurveyPage extends Composite implements MySampleSurveyPrese
 		root = new VerticalPanel();
 		caption = new LabelHeading(1);
 		description = new LabelHeading(2);
+		btnMakePersistent = new Button("Save");
 		root.add(caption);
 		root.add(description);
+		root.add(btnMakePersistent);
 		
 		// Must be called
 		initWidget(root);
 	}
 	
 	public Widget asWidget() {
-		// TODO Auto-generated method stub
 		return this;
 	}
 
-	public void startProcessing() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void stopProcessing() {
-		// TODO Auto-generated method stub
-		
-	}
+//	public void startProcessing() {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	public void stopProcessing() {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	public HasText getCaption() {
-		// TODO Auto-generated method stub
 		return (HasText) caption;
 	}
 
 	public HasText getDescription() {
-		// TODO Auto-generated method stub
 		return (HasText) description;
 	}
 
 	public HasClickHandlers getBtnMakePersistent() {
-		// TODO Auto-generated method stub
-		return null;
+		return btnMakePersistent;
 	}
 	
 	

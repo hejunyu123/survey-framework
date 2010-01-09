@@ -1,6 +1,7 @@
 package gwttest.client.samplesurvey.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+
+import org.apache.tools.ant.util.DateUtils;
 
 public class Survey implements Serializable {
 	private static final long serialVersionUID = 881287580798933082L;
@@ -26,10 +29,7 @@ public class Survey implements Serializable {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
-	private String key;
-
-	@Persistent
+//	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
 	private String name;
 
 	@Persistent
@@ -42,12 +42,18 @@ public class Survey implements Serializable {
 	private SurveyUser user;
 
 	public Survey() {
-		description = "";
+		this("", null, "", "");
 	}
 
-	public Survey(String description, String caption) {
+	public Survey(String name, SurveyUser user, String description, String caption) {
 		this.description = description;
 		this.caption = caption;
+		this.createdAt = new Date();
+		this.name = name;
+		this.user = user;
+		
+		this.elements = new ArrayList<SurveyElement>();
+		this.responses = new ArrayList<SurveyResponse>();
 	}
 
 	public String getCaption() {
@@ -66,9 +72,6 @@ public class Survey implements Serializable {
 		return elements;
 	}
 
-	public String getKey() {
-		return key;
-	}
 
 	public String getName() {
 		return name;
@@ -102,9 +105,6 @@ public class Survey implements Serializable {
 		this.elements = elements;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
-	}
 
 	public void setName(String name) {
 		this.name = name;

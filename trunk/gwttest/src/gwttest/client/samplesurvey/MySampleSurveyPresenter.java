@@ -10,7 +10,10 @@ import gwttest.client.samplesurvey.service.PersistenceService;
 import gwttest.client.samplesurvey.service.PersistenceServiceAsync;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
 
@@ -19,6 +22,7 @@ public class MySampleSurveyPresenter extends MyPresenter<MySampleSurveyPresenter
 
 	public MySampleSurveyPresenter(Display display, EventBus eventBus) {
 		super(display, eventBus);
+		currentModel = new Survey();
 		init();
 	}
 
@@ -37,6 +41,7 @@ public class MySampleSurveyPresenter extends MyPresenter<MySampleSurveyPresenter
 	 * History token used to adress the presented page.
 	 */
 	private PersistenceServiceAsync persistenceService = (PersistenceServiceAsync) GWT.create(PersistenceService.class);
+	private Survey currentModel;
 
 
 	@Override
@@ -48,23 +53,42 @@ public class MySampleSurveyPresenter extends MyPresenter<MySampleSurveyPresenter
 	/**
 	 * Hauptmethode, die die OberflŠche zusammenbaut
 	 */	
-//	@Override
 	public void init() {
 		// TODO Auto-generated method stub
 		getDisplay().getCaption().setText("HelloWorld Survey");
 		getDisplay().getDescription().setText("This is just a sample of an survey");
 		
+		// Add handler to save button
+		getDisplay().getBtnMakePersistent().addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				save();				
+			}
+			
+		});
+		
+		// Handle show survey events
 		getEventBus().addHandler(ShowSurveyEvent.TYPE, new ShowSurveyHandler() {
 
+			/**
+			 * Handles the Show Survey event.
+			 * Reads the specified survey via the persistence service and causes the 
+			 * History to show the suvey view.
+			 */
 			public void onShowSurvey(String surveyID) {
 				load(surveyID);
+				History.newItem(getPlace(), true);
 			}
 			
 		});
 	}
 	
 	private Survey toSurveyModel() {
-		return new Survey(getDisplay().getDescription().getText(), getDisplay().getCaption().getText());
+		return new Survey(currentModel.getName(),
+				currentModel.getUser(), 
+				getDisplay().getDescription().getText(), 
+				getDisplay().getCaption().getText()
+				);
 	}
 	
 	/**
@@ -90,6 +114,7 @@ public class MySampleSurveyPresenter extends MyPresenter<MySampleSurveyPresenter
 	 * @param model Das darzustellende Modell
 	 */
 	public void load(Survey model) {	
+		this.currentModel = model;
 		getDisplay().getCaption().setText(model.getCaption());
 		getDisplay().getDescription().setText(model.getDescription());		
 	}
