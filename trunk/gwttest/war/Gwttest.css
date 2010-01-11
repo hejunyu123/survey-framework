@@ -38,6 +38,10 @@ h3 {
 	padding: 0 1em;
 	text-align: left;
 }
-.gwt-Label-Red {
-	font-color: #AC0C0C;	
+.gwt-Label-Notification {
+	color: #AC0C0C;
+	display: none;
+}
+.gwt-Label-Notification .gwt-Label-Notification-Active {
+	display: inline;
 }

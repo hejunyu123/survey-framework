@@ -24,7 +24,7 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 		root.add(btnSubmit);
 		root.add(lblError);
 		
-		lblError.setStyleName("gwt-Label-Red");
+		lblError.addStyleName("gwt-Label-Red");
 		
 		initWidget(root);
 	}

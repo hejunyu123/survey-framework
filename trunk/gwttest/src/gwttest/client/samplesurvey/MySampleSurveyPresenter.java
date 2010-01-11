@@ -1,13 +1,15 @@
 package gwttest.client.samplesurvey;
 
+import gwttest.client.GwttestFactory;
 import gwttest.client.presenter.EventBus;
-import gwttest.client.presenter.MyPresenter;
+import gwttest.client.presenter.PagePresenter;
 import gwttest.client.presenter.WidgetDisplay;
 import gwttest.client.samplesurvey.event.ShowSurveyEvent;
 import gwttest.client.samplesurvey.event.ShowSurveyHandler;
 import gwttest.client.samplesurvey.model.Survey;
 import gwttest.client.samplesurvey.service.PersistenceService;
 import gwttest.client.samplesurvey.service.PersistenceServiceAsync;
+import gwttest.client.samplesurvey.widget.survey.YesNoPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,8 +18,14 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasWidgets;
 
-public class MySampleSurveyPresenter extends MyPresenter<MySampleSurveyPresenter.Display>{
+/**
+ * Presents a MySampleSurveyPage.
+ * @author fleerkoetter
+ *
+ */
+public class MySampleSurveyPresenter extends PagePresenter<MySampleSurveyPresenter.Display>{
 
 
 	public MySampleSurveyPresenter(Display display, EventBus eventBus) {
@@ -35,6 +43,7 @@ public class MySampleSurveyPresenter extends MyPresenter<MySampleSurveyPresenter
 		public HasText getCaption(); 
 		public HasText getDescription();
 		public HasClickHandlers getBtnMakePersistent();
+		public HasWidgets getQuestions();
 	}
 
 	/**
@@ -81,6 +90,10 @@ public class MySampleSurveyPresenter extends MyPresenter<MySampleSurveyPresenter
 			}
 			
 		});
+		
+		// Add a question widget for demostration purpose
+		YesNoPresenter demo = GwttestFactory.get().createYesNoWidget();
+//		getDisplay().getQuestions().add(demo.getDisplay().asWidget());
 	}
 	
 	private Survey toSurveyModel() {

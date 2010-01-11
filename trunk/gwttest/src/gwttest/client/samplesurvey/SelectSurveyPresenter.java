@@ -1,7 +1,7 @@
 package gwttest.client.samplesurvey;
 
 import gwttest.client.presenter.EventBus;
-import gwttest.client.presenter.MyPresenter;
+import gwttest.client.presenter.PagePresenter;
 import gwttest.client.presenter.WidgetDisplay;
 import gwttest.client.samplesurvey.event.ShowSurveyEvent;
 
@@ -10,7 +10,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.HasValue;
 
-public class SelectSurveyPresenter extends MyPresenter<SelectSurveyPresenter.Display> {
+public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.Display> {
 
 	public interface Display extends WidgetDisplay {
 		public HasValue<String> getIdBox();
