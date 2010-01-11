@@ -1,11 +1,17 @@
 package gwttest.client.presenter;
 
-
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.client.ui.RootPanel;
-
-public abstract class MyPresenter<T extends WidgetDisplay> implements ValueChangeHandler<String>{
+/**
+ * Abstract superclass for all presenters according to MVP pattern.
+ * The presenter holds the logic for the user interface element it presents. He is generically bound to a display interface,
+ * which defines of which logic elements the user interface consists of. The presenter uses only this logic abstraction to
+ * implement the logic, while the view class holds the concrete implementation through implementing the display interface.
+ *  
+ * @author fleerkoetter
+ *
+ * @param <T> The display interface that logically defines the elements of the view. Usually, this is a sub-interface of the 
+ *   concrete presenter class.
+ */
+public abstract class MyPresenter<T extends WidgetDisplay>{
 	
 	private final T display;
 	private EventBus eventBus;
@@ -21,15 +27,6 @@ public abstract class MyPresenter<T extends WidgetDisplay> implements ValueChang
 	
 	public EventBus getEventBus() {
 		return eventBus;
-	}
-	
-	public void onValueChange(ValueChangeEvent<String> event) {
-		if (getPlace().equals(event.getValue())) {
-			onShow();
-			RootPanel rp = RootPanel.get();
-			rp.clear();
-			rp.add(getDisplay().asWidget());			
-		}
 	}
 
 	/**

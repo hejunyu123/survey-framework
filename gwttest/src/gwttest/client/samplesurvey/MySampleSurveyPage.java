@@ -1,22 +1,31 @@
 package gwttest.client.samplesurvey;
 
+import gwttest.client.GwttestFactory;
 import gwttest.client.samplesurvey.widget.LabelHeading;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * This is a sample of how the view of a survey could look like.
+ * For the final product, this needs to be seperated into a "Edit survey" and a "Take survey" view.
+ * @author fleerkoetter
+ *
+ */
 public class MySampleSurveyPage extends Composite implements MySampleSurveyPresenter.Display {
 
-	private static Panel root;
-	private static Label caption;
-	private static Label description;
-	private static Button btnMakePersistent;
+	private Panel root;
+	private Label caption;
+	private Label description;
+	private Button btnMakePersistent;
+	private HasWidgets questions;
 	
 	/**
 	 * Constructs the page
@@ -27,6 +36,8 @@ public class MySampleSurveyPage extends Composite implements MySampleSurveyPrese
 		caption = new LabelHeading(1);
 		description = new LabelHeading(2);
 		btnMakePersistent = new Button("Save");
+		questions = new VerticalPanel();
+		
 		root.add(caption);
 		root.add(description);
 		root.add(btnMakePersistent);
@@ -59,6 +70,10 @@ public class MySampleSurveyPage extends Composite implements MySampleSurveyPrese
 
 	public HasClickHandlers getBtnMakePersistent() {
 		return btnMakePersistent;
+	}
+
+	public HasWidgets getQuestions() {
+		return questions;
 	}
 	
 	
