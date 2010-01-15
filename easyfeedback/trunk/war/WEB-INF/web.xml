@@ -5,7 +5,7 @@
 
 <web-app>
   
-  <!-- Servlets -->
+  <!-- Servlets 
   <servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>edu.vwa.easyfeedback.server.GreetingServiceImpl</servlet-class>
@@ -15,6 +15,17 @@
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/easyfeedback/greet</url-pattern>
   </servlet-mapping>
+  -->
+
+  <servlet>
+    <servlet-name>persist</servlet-name>
+    <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>persist</servlet-name>
+    <url-pattern>/easyfeedback/persist</url-pattern>
+  </servlet-mapping>  
   
   <!-- Default page to serve -->
   <welcome-file-list>
