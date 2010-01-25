@@ -18,15 +18,10 @@ public class YesNoWidget extends QuestionWidget implements YesNoPresenter.Displa
 		super();
 		
 		cbYes = new RadioButton("isYes", "Yes");
-		cbNo = new RadioButton("isNo", "No");
+		cbNo = new RadioButton("isYes", "No");
 		
 		getElementsContainer().add(cbYes);
 		getElementsContainer().add(cbNo);
-	}
-	
-	protected void construct() {
-		super.construct();
-
 	}
 
 	public HasValue<Boolean> getNo() {

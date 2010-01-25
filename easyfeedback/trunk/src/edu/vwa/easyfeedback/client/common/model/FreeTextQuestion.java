@@ -7,16 +7,31 @@ import javax.jdo.annotations.Persistent;
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class FreeTextQuestion extends Question {
 	private static final long serialVersionUID = -1056052722359250876L;
+	
 	@Persistent
-	private Boolean isMultiLineText; // Maybe an enum would be a better
+	private boolean isMultiLineText; // Maybe an enum would be a better
+	
+	@Persistent
+	private String text = "";
 
 	// solution..
 
-	public Boolean getIsMultiLineText() {
+	public boolean getIsMultiLineText() {
 		return isMultiLineText;
 	}
 
-	public void setIsMultiLineText(Boolean isMultiLineText) {
+	public void setIsMultiLineText(boolean isMultiLineText) {
 		this.isMultiLineText = isMultiLineText;
 	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	
+	
 }

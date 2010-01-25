@@ -12,5 +12,10 @@ public class YesNoQuestion extends Question {
 	 * 
 	 */
 	private static final long serialVersionUID = 2668360878822132101L;
+	private boolean isYes;
+	
+	public boolean getIsYes() {
+		return isYes;
+	}
 	
 }

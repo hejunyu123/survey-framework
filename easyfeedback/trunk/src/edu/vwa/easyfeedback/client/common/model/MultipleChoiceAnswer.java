@@ -7,17 +7,17 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class MultipleChoiseAnswer extends Answer {
+public class MultipleChoiceAnswer extends Answer {
 
 	private static final long serialVersionUID = -5664928827833400793L;
 	@Persistent
-	private List<MultipleChoiseOption> options;
+	private List<MultipleChoiceOption> options;
 
-	public List<MultipleChoiseOption> getOptions() {
+	public List<MultipleChoiceOption> getOptions() {
 		return options;
 	}
 
-	public void setOptions(List<MultipleChoiseOption> options) {
+	public void setOptions(List<MultipleChoiceOption> options) {
 		this.options = options;
 	}
 }

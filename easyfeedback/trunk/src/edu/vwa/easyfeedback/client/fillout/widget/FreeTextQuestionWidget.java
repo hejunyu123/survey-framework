@@ -6,14 +6,24 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * View widget for displaying questions where the user can enter a text freely.
+ * The caller can choose whether the widget should show a one-line {@code <input type="text">} or a
+ * multi-line {@code <textarea>}.
+ * 
+ * @author fleerkoetter
+ *
+ */
 public class FreeTextQuestionWidget extends QuestionWidget implements FreeTextQuestionPresenter.Display {
 
-	private TextBoxBase text = new TextBox();
-	private boolean isMultiLine = false;
+	private TextBoxBase text;
+	private boolean isMultiLine;
 	
 	public FreeTextQuestionWidget() {
 		super();
+		text = createText(false, "");
 		getElementsContainer().add(text);
+		isMultiLine = false;
 	}
 	
 	public HasText getText() {
@@ -24,20 +34,32 @@ public class FreeTextQuestionWidget extends QuestionWidget implements FreeTextQu
 		return isMultiLine;
 	}
 
-	public void setMultiLine(boolean value) {
+	/**
+	 * Determines the style of the text box.
+	 * @param value If set to true, the widget shows a multi-row input field. If not, it show a single-row input field.
+	 */
+	public void setMultiLine(boolean value) {	
 		if (value != isMultiLine()) {
-			if (value) {
-				String currText = text.getText();
-				text = new TextArea();
-				text.setText(currText);
-			} else {
-				String currText = text.getText();
-				text = new TextBox();
-				text.setText(currText);				
-			}
-			
+			getElementsContainer().clear();
+			text = createText(value, text.getText());
+			getElementsContainer().add(text);			
 		}
 
+	}
+	
+	private TextBoxBase createText(boolean isMultiline, String text) {
+		TextBoxBase result;
+		if (isMultiline) {
+			result = new TextArea();
+			result.getElement().setAttribute("rows", "7");
+			result.getElement().setAttribute("cols", "40");					
+
+		} else {
+			result = new TextBox();		
+		}
+		result.setText(text);
+		this.isMultiLine = isMultiline;
+		return result;		
 	}
 
 	public Widget asWidget() {

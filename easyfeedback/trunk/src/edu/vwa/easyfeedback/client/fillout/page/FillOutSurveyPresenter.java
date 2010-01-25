@@ -4,21 +4,22 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyEvent;
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyHandler;
+import edu.vwa.easyfeedback.client.common.model.Question;
 import edu.vwa.easyfeedback.client.common.model.Survey;
+import edu.vwa.easyfeedback.client.common.model.SurveyElement;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.common.presenter.PagePresenter;
 import edu.vwa.easyfeedback.client.common.presenter.WidgetDisplay;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
 import edu.vwa.easyfeedback.client.common.service.PersistenceServiceAsync;
 import edu.vwa.easyfeedback.client.fillout.FillOutModuleFactory;
-import edu.vwa.easyfeedback.client.fillout.widget.YesNoPresenter;
+import edu.vwa.easyfeedback.client.fillout.widget.QuestionPresenter;
 
 /**
  * Presents a MySampleSurveyPage.
@@ -40,15 +41,32 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 	 *
 	 */
 	public interface Display extends WidgetDisplay {
-		public HasText getCaption(); 
+		/**
+		 * The survey's caption.
+		 * @return
+		 */
+		public HasText getCaption();
+
+		/**
+		 * The survey's description or introductry text.
+		 * @return
+		 */
 		public HasText getDescription();
+
+		/**
+		 * 
+		 * @return
+		 */
 		public HasClickHandlers getBtnMakePersistent();
+
+		/**
+		 * Container for adding question widgets.
+		 * @return
+		 */
 		public HasWidgets getQuestions();
 	}
 
-	/**
-	 * History token used to adress the presented page.
-	 */
+
 	private PersistenceServiceAsync persistenceService = (PersistenceServiceAsync) GWT.create(PersistenceService.class);
 	private Survey currentModel;
 
@@ -63,19 +81,18 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 	 * Hauptmethode, die die OberflŠche zusammenbaut
 	 */	
 	public void init() {
-		// TODO Auto-generated method stub
-		getDisplay().getCaption().setText("HelloWorld Survey");
-		getDisplay().getDescription().setText("This is just a sample of an survey");
-		
+		getDisplay().getCaption().setText("%caption%");
+		getDisplay().getDescription().setText("%description");
+
 		// Add handler to save button
 		getDisplay().getBtnMakePersistent().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				save();				
 			}
-			
+
 		});
-		
+
 		// Handle show survey events
 		getEventBus().addHandler(ShowSurveyEvent.TYPE, new ShowSurveyHandler() {
 
@@ -86,26 +103,23 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 			 */
 			public void onShowSurvey(String surveyID) {
 				load(surveyID);
-				History.newItem(getPlace(), true);
+				//History.newItem(getPlace(), true);
 			}
-			
+
 		});
-		
-		// Add a question widget for demostration purpose
-		YesNoPresenter demo = FillOutModuleFactory.get().createYesNoWidget();
-		demo.getDisplay().getCaption().setText("1. This is a sample YesNo question. Do you like it?");
-		demo.getDisplay().getDescription().setText("I'm just explaining the question, don't pay attention to me");
-		getDisplay().getQuestions().add(demo.getDisplay().asWidget());
+
+
 	}
-	
+
 	private Survey toSurveyModel() {
+		//TODO make dynamic
 		return new Survey(currentModel.getName(),
 				currentModel.getUser(), 
 				getDisplay().getDescription().getText(), 
 				getDisplay().getCaption().getText()
-				);
+		);
 	}
-	
+
 	/**
 	 * LŠdt ein Suvey aus der Datenhaltung durch die Benutzung des PersistsSuvey-Services
 	 * @see gwttest.client.samplesurvey.PersistsSurvey#load(gwttest.client.samplesurvey.model.Survey)
@@ -114,7 +128,7 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 		persistenceService.getSurvey(name, new AsyncCallback<Survey>() {
 
 			public void onFailure(Throwable caught) {
-				
+
 			}
 
 			public void onSuccess(Survey result) {
@@ -122,18 +136,33 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 			}
 		});
 	}
-	
-	
+
+
 	/**
 	 * PrŠsentiert ein Survey-Model auf dem View.
 	 * @param model Das darzustellende Modell
+	 * @throws Throwable 
 	 */
+	@SuppressWarnings("unchecked")
 	public void load(Survey model) {	
 		this.currentModel = model;
 		getDisplay().getCaption().setText(model.getCaption());
-		getDisplay().getDescription().setText(model.getDescription());		
+		getDisplay().getDescription().setText(model.getDescription());
+
+		for (SurveyElement elem : model.getElements()) {
+			try {
+				Question question = (Question)elem;
+				QuestionPresenter<QuestionPresenter.Display, Question> presenter
+					= (QuestionPresenter<QuestionPresenter.Display, Question>) FillOutModuleFactory.get().createPresenterFor(question.getClass());
+				presenter.load(question);
+				getDisplay().getQuestions().add(presenter.getDisplay().asWidget());
+
+			} catch (Throwable e) {
+				e.printStackTrace();
+			} 
+		}
 	}
-	
+
 	/**
 	 * @see gwttest.client.samplesurvey.PersistsSurvey#save()
 	 */
@@ -144,8 +173,6 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 	@Override
 	public void onShow() {
 		// TODO Auto-generated method stub
-//		Window.alert("Hi!");
+		//		Window.alert("Hi!");
 	}
-	
-	
 }

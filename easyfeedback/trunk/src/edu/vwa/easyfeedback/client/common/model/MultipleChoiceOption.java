@@ -5,7 +5,7 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-public class MultipleChoiseOption {
+public class MultipleChoiceOption {
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
@@ -13,6 +13,12 @@ public class MultipleChoiseOption {
 
 	@Persistent
 	private String name;
+	
+	@Persistent
+	private String caption;
+
+	@Persistent
+	private Boolean value;
 
 	public String getKey() {
 		return key;
@@ -28,6 +34,14 @@ public class MultipleChoiseOption {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCaption() {
+		return caption;
+	}
+
+	public Boolean getValue() {
+		return value;
 	}
 
 }

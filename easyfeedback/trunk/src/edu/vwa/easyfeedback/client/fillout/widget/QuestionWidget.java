@@ -2,29 +2,46 @@ package edu.vwa.easyfeedback.client.fillout.widget;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.vwa.easyfeedback.client.common.presenter.WidgetDisplay;
 import edu.vwa.easyfeedback.client.common.widget.LabelHeading;
+import edu.vwa.easyfeedback.client.common.widget.VisibilityLabel;
 
+/**
+ * Abstract superclass for widgets representing a survey question.
+ * 
+ * @author fleerkoetter
+ *
+ */
 public class QuestionWidget extends Composite implements QuestionPresenter.Display {
+	
+
 	
 	private Label caption;
 	private Label description;
 	private Panel elements;
 	private Panel root;
+	private VisibilityLabel isOptional;
 
+	/**
+	 * Constructs the widget. initWidget musn't be called by 
+	 */
 	public QuestionWidget() {
 		caption = new LabelHeading(2, "%QuestionWidget.caption%");
 		description = new Label("%QuestionWidget.description%");
 		elements = new VerticalPanel();
 		root = new VerticalPanel();
+		isOptional = new VisibilityLabel("<i>This question is optional</i>");
 		
 		String baseStyle = "ef-Survey-Question";
 		root.addStyleName(baseStyle);
+		
 		caption.addStyleName(baseStyle + "-Caption");
 		description.addStyleName(baseStyle + "-Description");
 		elements.addStyleName(baseStyle + "-Elements");
@@ -35,25 +52,38 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 		
 		initWidget(root);
 	}
-
-	protected void construct() {
-
-	}
-
+	
+	/**
+	 * @see QuestionPresenter.Display#getCaption()
+	 */
 	public HasText getCaption() {
 		return caption;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see edu.vwa.easyfeedback.client.fillout.widget.QuestionPresenter.Display#getDescription()
+	 */
 	public HasText getDescription() {
 		return description;
 	}
 
+	/**
+	 * @see WidgetDisplay#asWidget()
+	 */
 	public Widget asWidget() {
 		return this;
 	}
 
+	/**
+	 * @see QuestionPresenter.Display#getElementsContainer()
+	 */
 	public HasWidgets getElementsContainer() {
 		return elements;
+	}
+
+	public HasValue<Boolean> getIsOptional() {
+		return isOptional;
 	}
 
 }

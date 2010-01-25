@@ -2,6 +2,7 @@ package edu.vwa.easyfeedback.client.fillout.widget;
 
 import com.google.gwt.user.client.ui.HasValue;
 
+import edu.vwa.easyfeedback.client.common.model.YesNoQuestion;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.common.presenter.WidgetDisplay;
 
@@ -10,9 +11,9 @@ import edu.vwa.easyfeedback.client.common.presenter.WidgetDisplay;
  * @author fleerkoetter
  *
  */
-public class YesNoPresenter extends QuestionPresenter<YesNoPresenter.Display> {
+public class YesNoPresenter extends QuestionPresenter<YesNoPresenter.Display, YesNoQuestion> {
 	
-	public YesNoPresenter(Display display, EventBus eventBus) {
+	public YesNoPresenter(final Display display, final EventBus eventBus) {
 		super(display, eventBus);
 	}
 
@@ -27,15 +28,20 @@ public class YesNoPresenter extends QuestionPresenter<YesNoPresenter.Display> {
 	}
 
 	@Override
-	public String getPlace() {
-		// TODO Auto-generated method stub
-		return null;
+	public final String getPlace() {
+		return "";
 	}
 
 	@Override
 	public void onShow() {
-		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public final void load(final YesNoQuestion model) {
+		super.load(model);
+		getDisplay().getYes().setValue(model.getIsYes());
+		getDisplay().getNo().setValue(!model.getIsYes());
 	}
 
 }

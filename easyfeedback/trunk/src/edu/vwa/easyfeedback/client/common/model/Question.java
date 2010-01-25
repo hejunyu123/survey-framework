@@ -14,17 +14,20 @@ import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
-public abstract class Question implements Serializable {
+public abstract class Question extends SurveyElement implements Serializable {
 	private static final long serialVersionUID = -3032677572801693979L;
 
 	@Persistent
 	private List<Answer> answers;
+	
+	@Persistent
+	private String caption;
 
 	@Persistent
 	private String description;
 
 	@Persistent
-	private Boolean isOptional;
+	private boolean isOptional;
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -32,8 +35,16 @@ public abstract class Question implements Serializable {
 	private String key;
 
 	public List<Answer> getAnswers() {
-		return answers;
+		return answers;		
 	}
+	
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
+
+	public String getCaption() {
+		return caption;
+	}	
 
 	public String getDescription() {
 		return description;
