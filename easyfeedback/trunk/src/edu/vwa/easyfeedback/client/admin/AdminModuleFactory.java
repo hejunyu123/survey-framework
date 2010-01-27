@@ -2,6 +2,8 @@ package edu.vwa.easyfeedback.client.admin;
 
 import com.google.gwt.user.client.History;
 
+import edu.vwa.easyfeedback.admin.client.widget.LoginPresenter;
+import edu.vwa.easyfeedback.admin.client.widget.LoginWidget;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPage;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPresenter;
 import edu.vwa.easyfeedback.client.common.presenter.DefaultEventBus;
@@ -30,6 +32,10 @@ public class AdminModuleFactory {
 		History.addValueChangeHandler(presenter);
 		return presenter;
 	}
+	
+	//public LoginPresenter createLoginWidget() {
+		//return new LoginPresenter(new LoginWidget(), getEventBus());
+	//}
 	
 	public YesNoPresenter createYesNoWidget() {
 		return new YesNoPresenter(new YesNoWidget(), getEventBus());
