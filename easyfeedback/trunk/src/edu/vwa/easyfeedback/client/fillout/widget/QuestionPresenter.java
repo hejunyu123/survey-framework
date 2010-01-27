@@ -38,6 +38,12 @@ public abstract class QuestionPresenter<T extends QuestionPresenter.Display, M e
 		HasText getDescription();
 		
 		/**
+		 * The number of a question widget in the survey
+		 * @return The number
+		 */
+		HasValue<Integer> getNumber();
+		
+		/**
 		 * Container for adding widgets representing the user's answering choices.
 		 * @return The container.
 		 */

@@ -22,6 +22,10 @@ public class SurveyElement implements Serializable {
 		return key;
 	}
 
+	/**
+	 * @deprecated Question now extends SurveyElement
+	 * @return
+	 */
 	public List<Question> getQuestions() {
 		return questions;
 	}

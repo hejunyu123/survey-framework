@@ -48,9 +48,15 @@ public class EasyFeedbackFillOut implements EntryPoint {
 					sample.getElements().add(yn);
 					
 					FreeTextQuestion text = new FreeTextQuestion();
-					text.setCaption("2. Why so you like them");
+					text.setCaption("Why so you like them (or not)?");
 					text.setDescription("Feel free to enter whatever you want ;-)");
 					sample.getElements().add(text);
+					
+					FreeTextQuestion multiText = new FreeTextQuestion();
+					multiText.setIsMultiLineText(true);
+					multiText.setCaption("Do you need some more space?");
+					multiText.setDescription("Feel free to enter whatever you want - even more ;-)");
+					sample.getElements().add(multiText);
 					
 					showSurvey.load(sample);
 				}

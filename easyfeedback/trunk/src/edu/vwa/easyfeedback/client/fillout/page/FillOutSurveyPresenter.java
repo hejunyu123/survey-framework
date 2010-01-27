@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.IndexedPanel;
 
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyEvent;
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyHandler;
@@ -61,9 +62,15 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 
 		/**
 		 * Container for adding question widgets.
-		 * @return
+		 * @return The question widget container
 		 */
 		public HasWidgets getQuestions();
+		
+		/**
+		 * Returns the question container with facilites to determine the order of the contained widgets
+		 * @return The question widget container
+		 */
+		public IndexedPanel getQuestionOrder();
 	}
 
 
@@ -149,12 +156,14 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 		getDisplay().getCaption().setText(model.getCaption());
 		getDisplay().getDescription().setText(model.getDescription());
 
+		int questionNum = 0;
 		for (SurveyElement elem : model.getElements()) {
 			try {
 				Question question = (Question)elem;
 				QuestionPresenter<QuestionPresenter.Display, Question> presenter
 					= (QuestionPresenter<QuestionPresenter.Display, Question>) FillOutModuleFactory.get().createPresenterFor(question.getClass());
 				presenter.load(question);
+				presenter.getDisplay().getNumber().setValue(++questionNum);
 				getDisplay().getQuestions().add(presenter.getDisplay().asWidget());
 
 			} catch (Throwable e) {

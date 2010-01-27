@@ -5,6 +5,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.IndexedPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -24,7 +25,7 @@ public class FillOutSurveyPage extends Composite implements FillOutSurveyPresent
 	private Label caption;
 	private Label description;
 	private Button btnMakePersistent;
-	private Panel questions;
+	private VerticalPanel questions;
 	
 	/**
 	 * Constructs the page
@@ -73,6 +74,10 @@ public class FillOutSurveyPage extends Composite implements FillOutSurveyPresent
 	}
 
 	public HasWidgets getQuestions() {
+		return questions;
+	}
+
+	public IndexedPanel getQuestionOrder() {
 		return questions;
 	}
 	

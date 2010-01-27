@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import edu.vwa.easyfeedback.client.common.presenter.WidgetDisplay;
 import edu.vwa.easyfeedback.client.common.widget.LabelHeading;
+import edu.vwa.easyfeedback.client.common.widget.NumberLabel;
 import edu.vwa.easyfeedback.client.common.widget.VisibilityLabel;
 
 /**
@@ -20,19 +21,19 @@ import edu.vwa.easyfeedback.client.common.widget.VisibilityLabel;
  *
  */
 public class QuestionWidget extends Composite implements QuestionPresenter.Display {
-	
-
-	
+		
 	private Label caption;
 	private Label description;
 	private Panel elements;
 	private Panel root;
 	private VisibilityLabel isOptional;
+	private NumberLabel number;
 
 	/**
 	 * Constructs the widget. initWidget musn't be called by 
 	 */
 	public QuestionWidget() {
+		number = new NumberLabel("#%1");
 		caption = new LabelHeading(2, "%QuestionWidget.caption%");
 		description = new Label("%QuestionWidget.description%");
 		elements = new VerticalPanel();
@@ -42,15 +43,19 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 		String baseStyle = "ef-Survey-Question";
 		root.addStyleName(baseStyle);
 		
+		number.addStyleName(baseStyle + "-Number");
 		caption.addStyleName(baseStyle + "-Caption");
 		description.addStyleName(baseStyle + "-Description");
 		elements.addStyleName(baseStyle + "-Elements");
 		
+		root.add(number);
+		root.add(isOptional);
 		root.add(caption);
 		root.add(description);
 		root.add(elements);
 		
 		initWidget(root);
+		
 	}
 	
 	/**
@@ -84,6 +89,10 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 
 	public HasValue<Boolean> getIsOptional() {
 		return isOptional;
+	}
+
+	public HasValue<Integer> getNumber() {
+		return number;
 	}
 
 }
