@@ -1,5 +1,6 @@
 package edu.vwa.easyfeedback.client.common.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.IdentityType;
@@ -17,6 +18,10 @@ public class MultipleChoiceQuestion extends Question {
 
 	@Persistent
 	private List<MultipleChoiceOption> options;
+	
+	public MultipleChoiceQuestion() {
+		this.options = new ArrayList<MultipleChoiceOption>();
+	}
 
 	public Integer getMaxOptions() {
 		return maxOptions;
@@ -30,13 +35,13 @@ public class MultipleChoiceQuestion extends Question {
 		this.maxOptions = maxOptions;
 	}
 
-	public void setSelectedOptions(List<MultipleChoiceOption> options) {
-//		this.setOptions(selectedOptions);
-	}
+//	public void setSelectedOptions(List<MultipleChoiceOption> options) {
+////		this.setOptions(selectedOptions);
+//	}
 
-	public void setOptions(List<MultipleChoiceOption> options) {
-		this.options = options;
-	}
+//	public void setOptions(List<MultipleChoiceOption> options) {
+//		this.options = options;
+//	}
 
 	public List<MultipleChoiceOption> getOptions() {
 		return options;

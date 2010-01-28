@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
-import edu.vwa.easyfeedback.admin.client.service.LoginInfo;
 import edu.vwa.easyfeedback.client.common.widget.LabelHeading;
 
 /**
@@ -52,24 +51,20 @@ public class LoginWidget extends Composite implements LoginPresenter.Display {
 
 	}
 	
-	@Override
 	public HasText getWelcomeMessage() {
 		return caption;
 	}
 	
-	@Override
 	public HasClickHandlers getBtnLogin() {
 		//Bei Klick Weiterleitung zur LoginUrl
 		return Login;
 	}	
 	
-	@Override
 	public HasClickHandlers getBtnLogout() {
 		//Bei Klick Weiterleitung zur LogoutUrl
 		return Logout;
 	}
 
-	@Override
 	public Widget asWidget() {
 		return this;
 	}

@@ -18,14 +18,24 @@
   -->
 
   <servlet>
-    <servlet-name>persist</servlet-name>
-    <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceImpl</servlet-class>
+    <servlet-name>persistService</servlet-name>
+     <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceMock</servlet-class>
+    <!--  <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceImpl</servlet-class> -->
   </servlet>
-  
   <servlet-mapping>
-    <servlet-name>persist</servlet-name>
-    <url-pattern>/easyfeedback/persist</url-pattern>
+    <servlet-name>persistService</servlet-name>
+    <url-pattern>/take/persist</url-pattern>
   </servlet-mapping>  
+  
+   <servlet>
+    <servlet-name>loginService</servlet-name>
+    <servlet-class>edu.vwa.easyfeedback.server.admin.service.LoginServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>loginService</servlet-name>
+    <url-pattern>/admin/login</url-pattern>
+  </servlet-mapping> 
   
   <!-- Default page to serve -->
   <welcome-file-list>

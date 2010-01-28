@@ -1,6 +1,7 @@
 package edu.vwa.easyfeedback.client.fillout;
 
 import edu.vwa.easyfeedback.client.common.model.FreeTextQuestion;
+import edu.vwa.easyfeedback.client.common.model.MultipleChoiceQuestion;
 import edu.vwa.easyfeedback.client.common.model.Question;
 import edu.vwa.easyfeedback.client.common.model.YesNoQuestion;
 import edu.vwa.easyfeedback.client.common.presenter.DefaultEventBus;
@@ -9,6 +10,8 @@ import edu.vwa.easyfeedback.client.fillout.page.FillOutSurveyPage;
 import edu.vwa.easyfeedback.client.fillout.page.FillOutSurveyPresenter;
 import edu.vwa.easyfeedback.client.fillout.widget.FreeTextQuestionPresenter;
 import edu.vwa.easyfeedback.client.fillout.widget.FreeTextQuestionWidget;
+import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionPresenter;
+import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionWidget;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoPresenter;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoWidget;
 
@@ -49,6 +52,8 @@ public class FillOutModuleFactory {
 			return createYesNoWidget();
 		} else if (modelClass.equals(FreeTextQuestion.class)) {
 			return createFreeTextQuestionWidget();
+		} else if (modelClass.equals(MultipleChoiceQuestion.class)) {
+			return createMultipleChoiceQuestionWidget();
 		}
 		return null;			
 	}
@@ -65,6 +70,10 @@ public class FillOutModuleFactory {
 	
 	public FreeTextQuestionPresenter createFreeTextQuestionWidget() {
 		return new FreeTextQuestionPresenter(new FreeTextQuestionWidget(), getEventBus());
+	}
+	
+	public MultipleChoiceQuestionPresenter createMultipleChoiceQuestionWidget() {
+		return new MultipleChoiceQuestionPresenter(new MultipleChoiceQuestionWidget(), getEventBus());
 	}
 
 }

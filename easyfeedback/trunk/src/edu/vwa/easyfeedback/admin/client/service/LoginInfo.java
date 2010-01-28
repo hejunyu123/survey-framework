@@ -7,6 +7,10 @@ import java.io.Serializable;
  * @author Pesco (von Julian aus r12 übernommen)
  */
 public class LoginInfo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8913175735244045054L;
 	private boolean loggedIn = false;
 	private String loginUrl;
 	private String logoutUrl;

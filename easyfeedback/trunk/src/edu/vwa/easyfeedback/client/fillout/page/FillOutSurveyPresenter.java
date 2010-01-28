@@ -155,7 +155,9 @@ public class FillOutSurveyPresenter extends PagePresenter<FillOutSurveyPresenter
 		this.currentModel = model;
 		getDisplay().getCaption().setText(model.getCaption());
 		getDisplay().getDescription().setText(model.getDescription());
-
+		
+		getDisplay().getQuestions().clear();
+		
 		int questionNum = 0;
 		for (SurveyElement elem : model.getElements()) {
 			try {
