@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -13,16 +14,18 @@ import edu.vwa.easyfeedback.client.common.widget.LabelHeading;
 
 public class SelectSurveyPage extends Composite implements SelectSurveyPresenter.Display {
 	
-	private final static Button btnSubmit = new Button("Load or create survey");
-	private final static TextBox tbID = new TextBox();
-	private final static Label lblError = new Label("Test");
-	private final static VerticalPanel root = new VerticalPanel();
+	private final Button btnSubmit = new Button("Load or create survey");
+	private final TextBox tbID = new TextBox();
+	private final Label lblError = new Label("Test");
+	private final VerticalPanel root = new VerticalPanel();
+	private final VerticalPanel surveys = new VerticalPanel();
 
 	public SelectSurveyPage() {		
 		root.add(new LabelHeading(1, "Please enter survey id:"));
 		root.add(tbID);
 		root.add(btnSubmit);
 		root.add(lblError);
+		root.add(surveys);
 		
 		lblError.addStyleName("gwt-Label-Red");
 		
@@ -43,6 +46,11 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 
 	public Widget asWidget() {
 		return (Widget)this;
+	}
+
+	@Override
+	public HasWidgets getSurveyOptions() {
+		return surveys;
 	}
 
 }
