@@ -31,49 +31,6 @@ public class EasyFeedbackFillOut implements EntryPoint {
 			}
 		});
 		
-//		History.addValueChangeHandler(new ValueChangeHandler<String>() {
-//			
-//			public void onValueChange(ValueChangeEvent<String> event) {
-//				if ((event.getValue() != null) && (event.getValue().compareTo("sample") == 0)) {
-//					Survey sample = new Survey();
-//					sample.setCaption("HelloWorld Survey");
-//					sample.setDescription("This is just a sample of an survey");
-//					
-//					// Yes/Np
-//					YesNoQuestion yn = new YesNoQuestion();
-//					yn.setCaption("Do you like surveys?");
-//					yn.setDescription("Just for a matter of interest...");
-//					sample.getElements().add(yn);
-//					
-//					// Single-line free text
-//					FreeTextQuestion text = new FreeTextQuestion();
-//					text.setCaption("Why so you like them (or not)?");
-//					text.setDescription("Feel free to enter whatever you want ;-)");
-//					sample.getElements().add(text);
-//					
-//					// Multiple-line free text
-//					FreeTextQuestion multiText = new FreeTextQuestion();
-//					multiText.setIsMultiLineText(true);
-//					multiText.setCaption("Do you need some more space?");
-//					multiText.setDescription("Feel free to enter whatever you want - even more ;-)");
-//					sample.getElements().add(multiText);
-//					
-//					// Multiple choice / exclusive
-//					MultipleChoiceQuestion multi = new MultipleChoiceQuestion();
-//					multi.setCaption("How many surveys do you take online?");
-//					multi.setDescription("In average per month.");
-//					multi.setMaxOptions(1);
-//					ArrayList<MultipleChoiceOption> multiAnswers = new ArrayList<MultipleChoiceOption>();
-//					multiAnswers.add(new MultipleChoiceOption("None"));
-//					multiAnswers.add(new MultipleChoiceOption("1-5"));
-//					multiAnswers.add(new MultipleChoiceOption("6-10"));
-//					multiAnswers.add(new MultipleChoiceOption("More than 10"));
-//					multi.setOptions(multiAnswers);
-//					sample.getElements().add(multi);
-//				}
-//			}
-//		});
-		
 		History.newItem("sample");
 	}
 
