@@ -29,42 +29,34 @@ public class SurveyOptionsWidget extends Composite implements SurveyOptionsPrese
 		this.initWidget(root);
 	}
 
-	@Override
 	public Widget asWidget() {
 		return this;
 	}
 
-	@Override
 	public HasText getName() {
 		return lblName;
 	}
 
-	@Override
 	public HasClickHandlers getDeleteClickHandlers() {
 		return deleteLink;
 	}
 
-	@Override
 	public HasClickHandlers getPublishClickHandlers() {
 		return publishLink;
 	}
 
-	@Override
 	public void setPublishVisible(boolean visible) {
 		publishLink.setVisible(visible);
 	}
 
-	@Override
 	public HasClickHandlers getShowClickHandlers() {
 		return showLink;
 	}
 
-	@Override
 	public HasClickHandlers getTakeClickHandlers() {
 		return takeLink;
 	}
 
-	@Override
 	public void setTakeVisible(boolean visible) {
 		takeLink.setVisible(visible);
 	}

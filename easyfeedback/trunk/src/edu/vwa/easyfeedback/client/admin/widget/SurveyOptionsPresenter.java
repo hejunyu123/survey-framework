@@ -49,14 +49,12 @@ public class SurveyOptionsPresenter extends MyPresenter<SurveyOptionsPresenter.D
 		getDisplay().getName().setText(survey.getCaption());
 		
 		getDisplay().getShowClickHandlers().addClickHandler(new ClickHandler() {
-			@Override
 			public void onClick(ClickEvent event) {
 				getEventBus().fireEvent(new ShowSurveyEvent(survey.getName()));
 			}
 		});
 		
 		getDisplay().getDeleteClickHandlers().addClickHandler(new ClickHandler() {
-			@Override
 			public void onClick(ClickEvent event) {
 				
 				//DialogBox dialog = new DialogBox();
@@ -69,18 +67,15 @@ public class SurveyOptionsPresenter extends MyPresenter<SurveyOptionsPresenter.D
 		if (survey.getPublishedAt() == null)
 		{
 			getDisplay().getPublishClickHandlers().addClickHandler(new ClickHandler() {
-				@Override
 				public void onClick(ClickEvent event) {
 					survey.setPublishedAt(new Date());
 					PersistenceServiceAsync db = AdminModuleFactory.get().getPersistanceService();
 					db.saveSurvey(survey, new AsyncCallback<Void>() {
 
-						@Override
 						public void onFailure(Throwable caught) {
 							onShow();
 						}
 
-						@Override
 						public void onSuccess(Void result) {
 							onShow();
 						}
@@ -93,7 +88,6 @@ public class SurveyOptionsPresenter extends MyPresenter<SurveyOptionsPresenter.D
 		else
 		{
 			getDisplay().getTakeClickHandlers().addClickHandler(new ClickHandler() {
-				@Override
 				public void onClick(ClickEvent event) {
 					
 				}
