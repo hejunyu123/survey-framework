@@ -61,6 +61,7 @@ public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.D
 
 	@Override
 	public void onShow() {
+		super.onShow();
 		getDisplay().getIdBox().setValue("");
 	}
 

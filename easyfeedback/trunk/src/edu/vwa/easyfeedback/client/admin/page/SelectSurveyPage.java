@@ -47,8 +47,7 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 	public Widget asWidget() {
 		return (Widget)this;
 	}
-
-	@Override
+	
 	public HasWidgets getSurveyOptions() {
 		return surveys;
 	}

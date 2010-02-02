@@ -59,8 +59,19 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 		multiOptions.add(new MultipleChoiceOption("1-5"));
 		multiOptions.add(new MultipleChoiceOption("6-10"));
 		multiOptions.add(new MultipleChoiceOption("More than 10"));
-//		multi.setOptions(multiAnswers);
 		sample.getElements().add(multi);
+		
+		MultipleChoiceQuestion alternate = new MultipleChoiceQuestion();
+		alternate.setCaption("What are your hobbies?");
+		alternate.setDescription("You can select more than 1");
+		alternate.setMaxOptions(-1);
+		alternate.getOptions().add(new MultipleChoiceOption("Swimming"));
+		alternate.getOptions().add(new MultipleChoiceOption("Reading"));
+		alternate.getOptions().add(new MultipleChoiceOption("Gardening"));
+		alternate.getOptions().add(new MultipleChoiceOption("Biking"));
+		alternate.getOptions().add(new MultipleChoiceOption("Watching movies"));
+		alternate.getOptions().add(new MultipleChoiceOption("Cleaning the house"));
+		sample.getElements().add(alternate);
 		
 		return sample;
 	}

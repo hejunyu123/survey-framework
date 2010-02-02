@@ -1,5 +1,8 @@
 package edu.vwa.easyfeedback.client.fillout;
 
+import com.google.gwt.user.client.ui.Label;
+
+import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
 import edu.vwa.easyfeedback.client.common.model.FreeTextQuestion;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceQuestion;
 import edu.vwa.easyfeedback.client.common.model.Question;
@@ -15,7 +18,7 @@ import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionWidget;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoPresenter;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoWidget;
 
-public class FillOutModuleFactory {
+public class FillOutModuleFactory implements QuestionPresenterFactory {
 
 	
 	private static final FillOutModuleFactory instance = new FillOutModuleFactory();	
@@ -41,10 +44,7 @@ public class FillOutModuleFactory {
 	}
 	
 	/**
-	 * Statically creates presenter instances depending on a given model class.
-	 * TODO better use dependency injection with GIN here.
-	 * @param modelClass A model class for a survey question
-	 * @return The instanciated presenter
+	 * @see QuestionPresenterFactory#createPresenterFor(java.lang.Class)
 	 */
 	public Object createPresenterFor(Class<? extends Question> modelClass) {
 		
@@ -60,7 +60,7 @@ public class FillOutModuleFactory {
 
 	
 	public FillOutSurveyPresenter createFillOutSurveyPage() {
-		FillOutSurveyPresenter presenter = new FillOutSurveyPresenter(new FillOutSurveyPage(), getEventBus());
+		FillOutSurveyPresenter presenter = new FillOutSurveyPresenter(new FillOutSurveyPage(this), getEventBus());
 		return presenter;
 	}
 	
@@ -74,6 +74,10 @@ public class FillOutModuleFactory {
 	
 	public MultipleChoiceQuestionPresenter createMultipleChoiceQuestionWidget() {
 		return new MultipleChoiceQuestionPresenter(new MultipleChoiceQuestionWidget(), getEventBus());
+	}
+
+	public Label createSurveyLabel(String text) {
+		return new Label(text);
 	}
 
 }

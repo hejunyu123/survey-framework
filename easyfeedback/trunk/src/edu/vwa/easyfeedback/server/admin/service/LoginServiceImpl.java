@@ -5,8 +5,8 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import edu.vwa.easyfeedback.admin.client.service.LoginInfo;
-import edu.vwa.easyfeedback.admin.client.service.LoginService;
+import edu.vwa.easyfeedback.client.admin.service.LoginInfo;
+import edu.vwa.easyfeedback.client.admin.service.LoginService;
 
 /**
  * Implementiert den LoginService, der dazu dient den Login-Status,

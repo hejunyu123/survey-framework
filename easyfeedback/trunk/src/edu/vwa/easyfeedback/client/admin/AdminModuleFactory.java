@@ -1,12 +1,17 @@
 package edu.vwa.easyfeedback.client.admin;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.Label;
 
+import edu.vwa.easyfeedback.client.admin.page.EditSurveyPage;
+import edu.vwa.easyfeedback.client.admin.page.EditSurveyPresenter;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPage;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPresenter;
+import edu.vwa.easyfeedback.client.admin.widget.EditableLabel;
 import edu.vwa.easyfeedback.client.admin.widget.SurveyOptionsPresenter;
 import edu.vwa.easyfeedback.client.admin.widget.SurveyOptionsWidget;
+import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
+import edu.vwa.easyfeedback.client.common.model.Question;
 import edu.vwa.easyfeedback.client.common.presenter.DefaultEventBus;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
@@ -14,7 +19,7 @@ import edu.vwa.easyfeedback.client.common.service.PersistenceServiceAsync;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoPresenter;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoWidget;
 
-public class AdminModuleFactory {
+public class AdminModuleFactory implements QuestionPresenterFactory {
 	
 	private static final AdminModuleFactory instance = new AdminModuleFactory();
 	private static final PersistenceServiceAsync persitanceService = GWT.create(PersistenceService.class);
@@ -33,7 +38,6 @@ public class AdminModuleFactory {
 	
 	public SelectSurveyPresenter createSelectSurveyPage() {
 		SelectSurveyPresenter presenter = new SelectSurveyPresenter(new SelectSurveyPage(), getEventBus());
-		History.addValueChangeHandler(presenter);
 		return presenter;
 	}
 	
@@ -53,6 +57,19 @@ public class AdminModuleFactory {
 	
 	public YesNoPresenter createYesNoWidget() {
 		return new YesNoPresenter(new YesNoWidget(), getEventBus());
+	}
+
+	public EditSurveyPresenter createEditSurveyPage() {
+		return new EditSurveyPresenter(new EditSurveyPage(this), getEventBus());
+	}
+
+	public Object createPresenterFor(Class<? extends Question> modelClass) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Label createSurveyLabel(String text) {
+		return new EditableLabel(text);
 	}
 
 }

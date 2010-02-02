@@ -1,6 +1,7 @@
 package edu.vwa.easyfeedback.client.fillout.widget;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -22,10 +23,10 @@ import edu.vwa.easyfeedback.client.common.widget.VisibilityLabel;
  */
 public class QuestionWidget extends Composite implements QuestionPresenter.Display {
 		
-	private Label caption;
-	private Label description;
+	protected Label caption;
+	protected Label description;
 	private Panel elements;
-	private Panel root;
+	protected FlowPanel root;
 	private VisibilityLabel isOptional;
 	private NumberLabel number;
 
@@ -37,7 +38,7 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 		caption = new LabelHeading(2, "%QuestionWidget.caption%");
 		description = new Label("%QuestionWidget.description%");
 		elements = new VerticalPanel();
-		root = new VerticalPanel();
+		root = new FlowPanel();
 		isOptional = new VisibilityLabel("<i>This question is optional</i>");
 		
 		String baseStyle = "ef-Survey-Question";

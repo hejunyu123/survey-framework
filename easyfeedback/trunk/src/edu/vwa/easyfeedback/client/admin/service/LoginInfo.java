@@ -1,4 +1,4 @@
-package edu.vwa.easyfeedback.admin.client.service;
+package edu.vwa.easyfeedback.client.admin.service;
 
 import java.io.Serializable;
 

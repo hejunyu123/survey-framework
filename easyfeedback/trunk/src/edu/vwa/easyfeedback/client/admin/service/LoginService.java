@@ -1,4 +1,4 @@
-package edu.vwa.easyfeedback.admin.client.service;
+package edu.vwa.easyfeedback.client.admin.service;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

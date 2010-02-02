@@ -24,6 +24,10 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>persistService</servlet-name>
+    <url-pattern>/admin/persist</url-pattern>
+  </servlet-mapping>   
+  <servlet-mapping>
+    <servlet-name>persistService</servlet-name>
     <url-pattern>/take/persist</url-pattern>
   </servlet-mapping>  
   

@@ -2,16 +2,9 @@ package edu.vwa.easyfeedback.client.fillout.page;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.IndexedPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
-import edu.vwa.easyfeedback.client.common.widget.LabelHeading;
+import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
+import edu.vwa.easyfeedback.client.common.page.BaseSurveyPage;
 
 /**
  * This is a sample of how the view of a survey could look like.
@@ -19,67 +12,22 @@ import edu.vwa.easyfeedback.client.common.widget.LabelHeading;
  * @author fleerkoetter
  *
  */
-public class FillOutSurveyPage extends Composite implements FillOutSurveyPresenter.Display {
+public class FillOutSurveyPage extends BaseSurveyPage implements FillOutSurveyPresenter.Display {
 
-	private Panel root;
-	private Label caption;
-	private Label description;
+	public FillOutSurveyPage(QuestionPresenterFactory factory) {
+		super(factory);
+	}
+
 	private Button btnMakePersistent;
-	private VerticalPanel questions;
 	
-	/**
-	 * Constructs the page
-	 */
-	public FillOutSurveyPage() {
-		// Construct page
-		root = new VerticalPanel();
-		caption = new LabelHeading(1);
-		description = new LabelHeading(2);
+	@Override
+	protected void construct() {
 		btnMakePersistent = new Button("Save");
-		questions = new VerticalPanel();
-		
-		root.add(caption);
-		root.add(description);
 		root.add(btnMakePersistent);
-		root.add(questions);
-		
-		// Must be called
-		initWidget(root);
-	}
-	
-	public Widget asWidget() {
-		return this;
-	}
-
-//	public void startProcessing() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	public void stopProcessing() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
-	public HasText getCaption() {
-		return (HasText) caption;
-	}
-
-	public HasText getDescription() {
-		return (HasText) description;
 	}
 
 	public HasClickHandlers getBtnMakePersistent() {
 		return btnMakePersistent;
-	}
-
-	public HasWidgets getQuestions() {
-		return questions;
-	}
-
-	public IndexedPanel getQuestionOrder() {
-		return questions;
-	}
-	
+	}	
 	
 }
