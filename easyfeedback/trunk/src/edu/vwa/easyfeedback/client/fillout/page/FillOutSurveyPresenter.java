@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 
+import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
 import edu.vwa.easyfeedback.client.common.model.Survey;
 import edu.vwa.easyfeedback.client.common.page.BaseSurveyPresenter;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
@@ -16,8 +17,8 @@ import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 public class FillOutSurveyPresenter extends BaseSurveyPresenter<FillOutSurveyPresenter.Display>{
 
 
-	public FillOutSurveyPresenter(Display display, EventBus eventBus) {
-		super(display, eventBus);
+	public FillOutSurveyPresenter(Display display, EventBus eventBus, QuestionPresenterFactory factory) {
+		super(display, eventBus, factory);
 		currentModel = new Survey();
 	}
 

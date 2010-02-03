@@ -21,7 +21,6 @@ public class SurveyOptionsPresenter extends MyPresenter<SurveyOptionsPresenter.D
 	
 	public SurveyOptionsPresenter(Display display, EventBus eventBus) {
 		super(display, eventBus);
-		// TODO Auto-generated constructor stub
 	}
 
 	public interface Display extends WidgetDisplay {

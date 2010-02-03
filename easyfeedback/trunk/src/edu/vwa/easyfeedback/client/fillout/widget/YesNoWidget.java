@@ -4,6 +4,8 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
+
 /**
  * View widget for displaying a YesNoQuestion
  * @author fleerkoetter
@@ -14,8 +16,8 @@ public class YesNoWidget extends QuestionWidget implements YesNoPresenter.Displa
 	private RadioButton cbYes;
 	private RadioButton cbNo;
 
-	public YesNoWidget() {
-		super();
+	public YesNoWidget(QuestionPresenterFactory factory) {
+		super(factory);
 		init();
 	}
 	

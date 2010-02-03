@@ -33,6 +33,9 @@ public abstract class BaseSurveyPage extends Composite implements BaseSurveyPres
 		questions = new VerticalPanel();
 		root = new VerticalPanel();		
 		
+		caption.addStyleName("ef-Survey-Caption");
+		description.addStyleName("ef-survey-Description");
+		
 		root.add(caption);
 		root.add(description);
 		root.add(questions);

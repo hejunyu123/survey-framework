@@ -11,15 +11,18 @@ import edu.vwa.easyfeedback.client.admin.widget.EditableLabel;
 import edu.vwa.easyfeedback.client.admin.widget.SurveyOptionsPresenter;
 import edu.vwa.easyfeedback.client.admin.widget.SurveyOptionsWidget;
 import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
-import edu.vwa.easyfeedback.client.common.model.Question;
 import edu.vwa.easyfeedback.client.common.presenter.DefaultEventBus;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
 import edu.vwa.easyfeedback.client.common.service.PersistenceServiceAsync;
+import edu.vwa.easyfeedback.client.fillout.widget.FreeTextQuestionPresenter;
+import edu.vwa.easyfeedback.client.fillout.widget.FreeTextQuestionWidget;
+import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionPresenter;
+import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionWidget;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoPresenter;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoWidget;
 
-public class AdminModuleFactory implements QuestionPresenterFactory {
+public class AdminModuleFactory extends QuestionPresenterFactory {
 	
 	private static final AdminModuleFactory instance = new AdminModuleFactory();
 	private static final PersistenceServiceAsync persitanceService = GWT.create(PersistenceService.class);
@@ -50,26 +53,27 @@ public class AdminModuleFactory implements QuestionPresenterFactory {
 	{
 		return persitanceService;
 	}
-
-	//public LoginPresenter createLoginWidget() {
-		//return new LoginPresenter(new LoginWidget(), getEventBus());
-	//}
 	
 	public YesNoPresenter createYesNoWidget() {
-		return new YesNoPresenter(new YesNoWidget(), getEventBus());
+		return new YesNoPresenter(new YesNoWidget(this), getEventBus());
 	}
 
 	public EditSurveyPresenter createEditSurveyPage() {
-		return new EditSurveyPresenter(new EditSurveyPage(this), getEventBus());
-	}
-
-	public Object createPresenterFor(Class<? extends Question> modelClass) {
-		// TODO Auto-generated method stub
-		return null;
+		return new EditSurveyPresenter(new EditSurveyPage(this), getEventBus(), this);
 	}
 
 	public Label createSurveyLabel(String text) {
 		return new EditableLabel(text);
+	}
+
+	@Override
+	public FreeTextQuestionPresenter createFreeTextQuestionWidget() {
+		return new FreeTextQuestionPresenter(new FreeTextQuestionWidget(this), getEventBus());
+	}
+
+	@Override
+	public MultipleChoiceQuestionPresenter createMultipleChoiceQuestionWidget() {
+		return new MultipleChoiceQuestionPresenter(new MultipleChoiceQuestionWidget(this), getEventBus());
 	}
 
 }

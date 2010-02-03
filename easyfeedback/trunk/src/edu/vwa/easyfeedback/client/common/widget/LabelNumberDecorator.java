@@ -1,32 +1,34 @@
 package edu.vwa.easyfeedback.client.common.widget;
 
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 
 /**
- * A label that contains numbers and can be used with HasValue<Integer>
+ * Decorator for using a label with numbers and {@link HasValue<Integer>}
  * @author fleerkoetter
  *
  */
-public class NumberLabel extends Label implements HasValue<Integer> {
+public class LabelNumberDecorator implements HasValue<Integer> {
 	
 	private String valueFormat = "%1";
+	private Label target;
 
-	public NumberLabel() {
-		this(-1);
+	public LabelNumberDecorator(Label target) {
+		this.target = target;
 	}
 	
-	public NumberLabel(String valueFormat){
-		this();
+	public LabelNumberDecorator(Label target, String valueFormat){
+		this(target);
 		setValueFormat(valueFormat);
 	}
 	
-	public NumberLabel(int value) {
-		super();	
-		setValue(value);
-	}
+//	public NumberLabel(int value) {
+//		super();	
+//		setValue(value);
+//	}
 	
 	/**
 	 * Set a pseudo-format string that is used to convert the Label's value to text.
@@ -39,14 +41,14 @@ public class NumberLabel extends Label implements HasValue<Integer> {
 
 	public Integer getValue() {
 		try {
-			return Integer.valueOf(getText());
+			return Integer.valueOf(getTarget().getText());
 		} catch (NumberFormatException e) {
 			return -1;
 		}
 	}
 
 	public void setValue(Integer value) {
-		setText(valueFormat.replaceAll("%1", value.toString()));
+		getTarget().setText(valueFormat.replaceAll("%1", value.toString()));
 	}
 
 	public void setValue(Integer value, boolean fireEvents) {
@@ -54,9 +56,21 @@ public class NumberLabel extends Label implements HasValue<Integer> {
 	}
 
 	public HandlerRegistration addValueChangeHandler(
-			ValueChangeHandler<Integer> handler) {
-		// TODO Auto-generated method stub
-		return null;
+ 	 		ValueChangeHandler<Integer> handler) {
+		return new HandlerRegistration() {
+			
+			public void removeHandler() {
+			}
+		};
+	}
+
+	public void fireEvent(GwtEvent<?> event) {
+		getTarget().fireEvent(event);
+		
+	}
+
+	public Label getTarget() {
+		return target;
 	}
 
 }

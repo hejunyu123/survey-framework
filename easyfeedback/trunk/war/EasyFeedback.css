@@ -3,14 +3,14 @@
 
 /** Example rules used by the template application (remove for your app) */
 
-h1 {
+.ef-Survey-Caption {
 	text-align: center;
 	font-size: 170%;
 	font-weight: bold;
 	margin: 0.5em 0;
 }
 
-h2 {
+.ef-Survey-Description {
 	text-align: left;
 	font-size: 130%;
 	font-weight: bold;
@@ -38,6 +38,20 @@ h3 {
     margin-left: 5px;
 }
 
+.ef-Survey-Caption {
+	text-align: center;
+	font-size: 170%;
+	font-weight: bold;
+	margin: 0.5em 0;
+}
+
+.ef-Survey-Description {
+	text-align: left;
+	font-size: 130%;
+	font-weight: bold;
+	margin: 0.5em 0;
+}
+
 .ef-Survey-Question {
 	padding-bottom:10px;
 	padding-left:10px;
@@ -52,4 +66,8 @@ h3 {
 .ef-Survey-Question-Description {
     padding-left: 23px;
     padding-bottom: 10px;
+}
+
+.ef-EditableLabel-hover {
+	background-color: yellow;	
 }

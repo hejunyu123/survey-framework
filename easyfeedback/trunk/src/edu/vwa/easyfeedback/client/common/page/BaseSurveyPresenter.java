@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.IndexedPanel;
 
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyHandler;
+import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
 import edu.vwa.easyfeedback.client.common.model.Question;
 import edu.vwa.easyfeedback.client.common.model.Survey;
 import edu.vwa.easyfeedback.client.common.model.SurveyElement;
@@ -15,7 +16,6 @@ import edu.vwa.easyfeedback.client.common.presenter.PagePresenter;
 import edu.vwa.easyfeedback.client.common.presenter.WidgetDisplay;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
 import edu.vwa.easyfeedback.client.common.service.PersistenceServiceAsync;
-import edu.vwa.easyfeedback.client.fillout.FillOutModuleFactory;
 import edu.vwa.easyfeedback.client.fillout.widget.QuestionPresenter;
 
 public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
@@ -25,9 +25,11 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 	protected Survey currentModel;	
 	@SuppressWarnings("unused")
 	private boolean isLoaded = false;
+	private QuestionPresenterFactory factory;
 
-	public BaseSurveyPresenter(T display, EventBus eventBus) {
+	public BaseSurveyPresenter(T display, EventBus eventBus, QuestionPresenterFactory factory) {
 		super(display, eventBus);
+		this.factory = factory;
 		currentModel = new Survey();
 		
 		init();
@@ -127,7 +129,7 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 				try {
 					Question question = (Question)elem;
 					QuestionPresenter<QuestionPresenter.Display, Question> presenter
-					= (QuestionPresenter<QuestionPresenter.Display, Question>) FillOutModuleFactory.get().createPresenterFor(question.getClass());
+					= (QuestionPresenter<QuestionPresenter.Display, Question>) factory.createPresenterFor(question.getClass());
 					presenter.load(question);
 					presenter.getDisplay().getNumber().setValue(++questionNum);
 					getDisplay().getQuestions().add(presenter.getDisplay().asWidget());

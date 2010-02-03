@@ -6,6 +6,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TextBoxBase;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
+
 /**
  * View widget for displaying questions where the user can enter a text freely.
  * The caller can choose whether the widget should show a one-line {@code <input type="text">} or a
@@ -19,8 +21,8 @@ public class FreeTextQuestionWidget extends QuestionWidget implements FreeTextQu
 	private TextBoxBase text;
 	private boolean isMultiLine;
 	
-	public FreeTextQuestionWidget() {
-		super();
+	public FreeTextQuestionWidget(QuestionPresenterFactory factory) {
+		super(factory);
 		text = createText(false, "");
 		getElementsContainer().add(text);
 		isMultiLine = false;

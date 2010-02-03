@@ -10,9 +10,9 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
 import edu.vwa.easyfeedback.client.common.presenter.WidgetDisplay;
-import edu.vwa.easyfeedback.client.common.widget.LabelHeading;
-import edu.vwa.easyfeedback.client.common.widget.NumberLabel;
+import edu.vwa.easyfeedback.client.common.widget.LabelNumberDecorator;
 import edu.vwa.easyfeedback.client.common.widget.VisibilityLabel;
 
 /**
@@ -28,15 +28,20 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 	private Panel elements;
 	protected FlowPanel root;
 	private VisibilityLabel isOptional;
-	private NumberLabel number;
+	private Label number;
+	private LabelNumberDecorator numberDecorator;
+//	private QuestionPresenterFactory factory;
 
 	/**
 	 * Constructs the widget. initWidget musn't be called by 
 	 */
-	public QuestionWidget() {
-		number = new NumberLabel("#%1");
-		caption = new LabelHeading(2, "%QuestionWidget.caption%");
-		description = new Label("%QuestionWidget.description%");
+	public QuestionWidget(QuestionPresenterFactory factory) {
+//		this.factory = factory;
+		
+		numberDecorator = new LabelNumberDecorator(new Label(), "#%1");
+		number = numberDecorator.getTarget();
+		caption = factory.createSurveyLabel("%QuestionWidget.caption%");
+		description = factory.createSurveyLabel("%QuestionWidget.description%");
 		elements = new VerticalPanel();
 		root = new FlowPanel();
 		isOptional = new VisibilityLabel("<i>This question is optional</i>");
@@ -55,8 +60,7 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 		root.add(description);
 		root.add(elements);
 		
-		initWidget(root);
-		
+		initWidget(root);		
 	}
 	
 	/**
@@ -93,7 +97,7 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 	}
 
 	public HasValue<Integer> getNumber() {
-		return number;
+		return numberDecorator;
 	}
 
 }
