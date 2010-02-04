@@ -1,9 +1,10 @@
 package edu.vwa.easyfeedback.client.common.page;
 
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.IndexedPanel;
+import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -11,10 +12,11 @@ import com.google.gwt.user.client.ui.Widget;
 import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
 
 public abstract class BaseSurveyPage extends Composite implements BaseSurveyPresenter.Display {
-	
+
 	protected Label caption;
 	protected Label description;
 	protected VerticalPanel questions;
+	protected Button btnMakePersistent;
 	protected VerticalPanel root;
 	protected QuestionPresenterFactory factory;
 	
@@ -32,6 +34,7 @@ public abstract class BaseSurveyPage extends Composite implements BaseSurveyPres
 		description = factory.createSurveyLabel("%Description%");
 		questions = new VerticalPanel();
 		root = new VerticalPanel();		
+		btnMakePersistent = new Button("Save");
 		
 		caption.addStyleName("ef-Survey-Caption");
 		description.addStyleName("ef-survey-Description");
@@ -39,6 +42,7 @@ public abstract class BaseSurveyPage extends Composite implements BaseSurveyPres
 		root.add(caption);
 		root.add(description);
 		root.add(questions);
+		root.add(btnMakePersistent);		
 	}
 
 	/**
@@ -54,12 +58,12 @@ public abstract class BaseSurveyPage extends Composite implements BaseSurveyPres
 		return (HasText) description;
 	}
 
-	public HasWidgets getQuestions() {
+	public InsertPanel getQuestions() {
 		return questions;
 	}
-
-	public IndexedPanel getQuestionOrder() {
-		return questions;
+	
+	public HasClickHandlers getBtnMakePersistent() {
+		return btnMakePersistent;
 	}
 
 	public Widget asWidget() {

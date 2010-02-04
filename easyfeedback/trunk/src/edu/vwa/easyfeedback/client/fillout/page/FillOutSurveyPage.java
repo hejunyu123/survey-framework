@@ -1,8 +1,5 @@
 package edu.vwa.easyfeedback.client.fillout.page;
 
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.ui.Button;
-
 import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
 import edu.vwa.easyfeedback.client.common.page.BaseSurveyPage;
 
@@ -17,17 +14,13 @@ public class FillOutSurveyPage extends BaseSurveyPage implements FillOutSurveyPr
 	public FillOutSurveyPage(QuestionPresenterFactory factory) {
 		super(factory);
 	}
-
-	private Button btnMakePersistent;
 	
 	@Override
 	protected void construct() {
-		btnMakePersistent = new Button("Save");
-		root.add(btnMakePersistent);
+
 	}
 
-	public HasClickHandlers getBtnMakePersistent() {
-		return btnMakePersistent;
-	}	
+
+
 	
 }

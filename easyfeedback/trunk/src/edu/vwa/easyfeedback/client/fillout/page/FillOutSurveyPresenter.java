@@ -2,7 +2,6 @@ package edu.vwa.easyfeedback.client.fillout.page;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
 
 import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
 import edu.vwa.easyfeedback.client.common.model.Survey;
@@ -28,11 +27,7 @@ public class FillOutSurveyPresenter extends BaseSurveyPresenter<FillOutSurveyPre
 	 *
 	 */
 	public interface Display extends BaseSurveyPresenter.Display {
-		/**
-		 * 
-		 * @return
-		 */
-		public HasClickHandlers getBtnMakePersistent();
+
 	}
 
 

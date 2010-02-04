@@ -1,10 +1,10 @@
 package edu.vwa.easyfeedback.client.common.page;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.IndexedPanel;
+import com.google.gwt.user.client.ui.InsertPanel;
 
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyHandler;
 import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
@@ -29,7 +29,7 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 
 	public BaseSurveyPresenter(T display, EventBus eventBus, QuestionPresenterFactory factory) {
 		super(display, eventBus);
-		this.factory = factory;
+		this.setFactory(factory);
 		currentModel = new Survey();
 		
 		init();
@@ -64,13 +64,13 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 		 * Container for adding question widgets.
 		 * @return The question widget container
 		 */
-		public HasWidgets getQuestions();
+		public InsertPanel getQuestions();
 		
 		/**
-		 * Returns the question container with facilites to determine the order of the contained widgets
-		 * @return The question widget container
+		 * A button to save the current state of the page. 
+		 * @return Facility to add click handlers
 		 */
-		public IndexedPanel getQuestionOrder();
+		public HasClickHandlers getBtnMakePersistent();
 	}
 	
 	/**
@@ -122,17 +122,18 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 			getDisplay().getCaption().setText(model.getCaption());
 			getDisplay().getDescription().setText(model.getDescription());
 
-			getDisplay().getQuestions().clear();
+			while (getDisplay().getQuestions().getWidgetCount() > 0 ) getDisplay().getQuestions().remove(0);
 
-			int questionNum = 0;
 			for (SurveyElement elem : model.getElements()) {
 				try {
+					// Get presenter for model
 					Question question = (Question)elem;
 					QuestionPresenter<QuestionPresenter.Display, Question> presenter
-					= (QuestionPresenter<QuestionPresenter.Display, Question>) factory.createPresenterFor(question.getClass());
+					= (QuestionPresenter<QuestionPresenter.Display, Question>) getFactory().createPresenterFor(question.getClass());
+					
+					// Load model and add question to survey
 					presenter.load(question);
-					presenter.getDisplay().getNumber().setValue(++questionNum);
-					getDisplay().getQuestions().add(presenter.getDisplay().asWidget());
+					addQuestion(presenter);
 
 				} catch (Throwable e) {
 					e.printStackTrace();
@@ -142,6 +143,11 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 		finally {
 			setLoading(false);
 		}
+	}
+	
+	public void addQuestion(QuestionPresenter<?, ?> presenter) {
+		getDisplay().getQuestions().add(presenter.getDisplay().asWidget());	
+		presenter.getDisplay().getNumber().setValue(getDisplay().getQuestions().getWidgetIndex(presenter.getDisplay().asWidget()) + 1);
 	}
 
 	/**
@@ -162,6 +168,14 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 	
 	protected void setLoading(boolean value) {
 		this.isLoaded = !value;
+	}
+
+	private void setFactory(QuestionPresenterFactory factory) {
+		this.factory = factory;
+	}
+
+	public QuestionPresenterFactory getFactory() {
+		return factory;
 	}
 
 }

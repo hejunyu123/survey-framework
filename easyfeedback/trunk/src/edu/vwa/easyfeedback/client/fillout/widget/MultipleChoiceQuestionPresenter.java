@@ -1,12 +1,5 @@
 	package edu.vwa.easyfeedback.client.fillout.widget;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.RadioButton;
-import com.google.gwt.user.client.ui.Widget;
-
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceOption;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceQuestion;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
@@ -21,13 +14,14 @@ public class MultipleChoiceQuestionPresenter
 	 extends QuestionPresenter<MultipleChoiceQuestionPresenter.Display, MultipleChoiceQuestion> {
 	
 	public interface Display extends QuestionPresenter.Display {
+		public void addOption(String caption, boolean value, String name, boolean isExclusive);
 	}
 	
-	private Map<MultipleChoiceOption, Widget> choices;
+	private MultipleChoiceQuestion model = new MultipleChoiceQuestion();	
 	
+
 	public MultipleChoiceQuestionPresenter(Display display, EventBus eventBus) {
 		super(display, eventBus);
-		choices = new HashMap<MultipleChoiceOption, Widget>();
 	}
 	
 
@@ -42,11 +36,7 @@ public class MultipleChoiceQuestionPresenter
 	 */
 	@Override
 	public void onShow() {	
-		while (getDisplay().getElementsContainer().getWidgetCount() > 0) getDisplay().getElementsContainer().remove(0);
-//		getDisplay().getElementsContainer().clear();
-		for (Widget elem :choices.values()) {
-			getDisplay().getElementsContainer().add(elem);
-		}
+		
 	}
 
 	/**
@@ -54,12 +44,13 @@ public class MultipleChoiceQuestionPresenter
 	 */
 	@Override
 	public void load(MultipleChoiceQuestion model) {
+		this.model = model;
 		super.load(model);
-		
-		choices.clear();
+
+		while (getDisplay().getElementsContainer().getWidgetCount() > 0) getDisplay().getElementsContainer().remove(0);
 		for (MultipleChoiceOption option : model.getOptions()) {
-			addChoice(option, model.getMaxOptions() == 1);
-		}
+			addOption(option);
+		}	
 		
 		onShow();
 	}
@@ -68,17 +59,19 @@ public class MultipleChoiceQuestionPresenter
 	 * Add a choice model to the choices
 	 * @param choice
 	 */
-	public void addChoice(MultipleChoiceOption choice, boolean isExclusive) {
-		CheckBox elem;
-		if (isExclusive) {
-			elem = new RadioButton(choice.getName()); 
-		} else {
-			elem = new CheckBox();
-			elem.setName(choice.getName());
-		}
-		elem.setText(choice.getCaption());
-		elem.setValue(choice.getValue());
-		choices.put(choice, elem);
+	private void addOption(final MultipleChoiceOption choice) {
+		((MultipleChoiceQuestionPresenter.Display)getDisplay()).addOption(choice.getCaption(), choice.getValue(),
+				choice.getName(), model.getMaxOptions() == 1);
 	}		
+	
+	
+	public MultipleChoiceQuestion getModel() {
+		return model;
+	}
+
+
+	public void setModel(MultipleChoiceQuestion model) {
+		this.model = model;
+	}
 	
 }

@@ -12,6 +12,11 @@ import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionWidget;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoPresenter;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoWidget;
 
+/**
+ * 
+ * @author fleerkoetter
+ *
+ */
 public class FillOutModuleFactory extends QuestionPresenterFactory {
 
 	
@@ -34,21 +39,21 @@ public class FillOutModuleFactory extends QuestionPresenterFactory {
 		return presenter;
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see edu.vwa.easyfeedback.client.fillout.QuestionPresenterFactory#createYesNoWidget()
 	 */
 	public YesNoPresenter createYesNoWidget() {
 		return new YesNoPresenter(new YesNoWidget(this), getEventBus());
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see edu.vwa.easyfeedback.client.fillout.QuestionPresenterFactory#createFreeTextQuestionWidget()
 	 */
 	public FreeTextQuestionPresenter createFreeTextQuestionWidget() {
 		return new FreeTextQuestionPresenter(new FreeTextQuestionWidget(this), getEventBus());
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see edu.vwa.easyfeedback.client.fillout.QuestionPresenterFactory#createMultipleChoiceQuestionWidget()
 	 */
 	public MultipleChoiceQuestionPresenter createMultipleChoiceQuestionWidget() {

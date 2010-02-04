@@ -51,7 +51,8 @@ public abstract class Question extends SurveyElement implements Serializable {
 	}
 
 	public Boolean getIsOptional() {
-		return isOptional;
+		//TODO Make all questions required until implemented otherwise
+		return false;
 	}
 
 	public String getKey() {
