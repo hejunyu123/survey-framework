@@ -34,15 +34,19 @@ public class FreeTextQuestionPresenter extends QuestionPresenter<FreeTextQuestio
 	}
 
 	@Override
-	public void onShow() {
-		
+	public void load(FreeTextQuestion model) {
+		super.load(model);
+		this.setMultiLine(model.getIsMultiLineText());
+		getDisplay().getText().setText(model.getText());
 	}
 
 	@Override
-	public void load(FreeTextQuestion model) {
-		super.load(model);
-		getDisplay().setMultiLine(model.getIsMultiLineText());
-		getDisplay().getText().setText(model.getText());
+	public void onShow() {
+		
+	}
+	
+	protected void setMultiLine(boolean value) {
+		getDisplay().setMultiLine(value);
 	}
 
 }

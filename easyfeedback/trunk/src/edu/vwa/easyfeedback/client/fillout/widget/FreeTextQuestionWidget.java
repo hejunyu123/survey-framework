@@ -42,9 +42,10 @@ public class FreeTextQuestionWidget extends QuestionWidget implements FreeTextQu
 	 */
 	public void setMultiLine(boolean value) {	
 		if (value != isMultiLine()) {
-			getElementsContainer().clear();
-			text = createText(value, text.getText());
-			getElementsContainer().add(text);			
+			TextBoxBase newText = createText(value, text.getText());
+			getElementsContainer().insert(newText, getElementsContainer().getWidgetIndex(text));	
+			getElementsContainer().remove(getElementsContainer().getWidgetIndex(text));
+			text = newText;
 		}
 
 	}

@@ -4,9 +4,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -25,7 +24,7 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 		
 	protected Label caption;
 	protected Label description;
-	private Panel elements;
+	private VerticalPanel elements;
 	protected FlowPanel root;
 	private VisibilityLabel isOptional;
 	private Label number;
@@ -88,7 +87,7 @@ public class QuestionWidget extends Composite implements QuestionPresenter.Displ
 	/**
 	 * @see QuestionPresenter.Display#getElementsContainer()
 	 */
-	public HasWidgets getElementsContainer() {
+	public InsertPanel getElementsContainer() {
 		return elements;
 	}
 

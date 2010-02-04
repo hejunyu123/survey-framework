@@ -7,6 +7,8 @@ import edu.vwa.easyfeedback.client.admin.page.EditSurveyPage;
 import edu.vwa.easyfeedback.client.admin.page.EditSurveyPresenter;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPage;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPresenter;
+import edu.vwa.easyfeedback.client.admin.widget.EditableFreeTextQuestionPresenter;
+import edu.vwa.easyfeedback.client.admin.widget.EditableFreeTextQuestionWidget;
 import edu.vwa.easyfeedback.client.admin.widget.EditableLabel;
 import edu.vwa.easyfeedback.client.admin.widget.SurveyOptionsPresenter;
 import edu.vwa.easyfeedback.client.admin.widget.SurveyOptionsWidget;
@@ -16,7 +18,6 @@ import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
 import edu.vwa.easyfeedback.client.common.service.PersistenceServiceAsync;
 import edu.vwa.easyfeedback.client.fillout.widget.FreeTextQuestionPresenter;
-import edu.vwa.easyfeedback.client.fillout.widget.FreeTextQuestionWidget;
 import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionPresenter;
 import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionWidget;
 import edu.vwa.easyfeedback.client.fillout.widget.YesNoPresenter;
@@ -68,7 +69,7 @@ public class AdminModuleFactory extends QuestionPresenterFactory {
 
 	@Override
 	public FreeTextQuestionPresenter createFreeTextQuestionWidget() {
-		return new FreeTextQuestionPresenter(new FreeTextQuestionWidget(this), getEventBus());
+		return new EditableFreeTextQuestionPresenter(new EditableFreeTextQuestionWidget(this), getEventBus());
 	}
 
 	@Override

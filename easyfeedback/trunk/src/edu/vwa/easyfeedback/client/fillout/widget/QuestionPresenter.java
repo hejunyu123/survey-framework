@@ -2,7 +2,7 @@ package edu.vwa.easyfeedback.client.fillout.widget;
 
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.InsertPanel;
 
 import edu.vwa.easyfeedback.client.common.model.Question;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
@@ -47,7 +47,7 @@ public abstract class QuestionPresenter<T extends QuestionPresenter.Display, M e
 		 * Container for adding widgets representing the user's answering choices.
 		 * @return The container.
 		 */
-		HasWidgets getElementsContainer();
+		InsertPanel getElementsContainer();
 		
 		/**
 		 * If set to true, show something to indicate that this question is optional

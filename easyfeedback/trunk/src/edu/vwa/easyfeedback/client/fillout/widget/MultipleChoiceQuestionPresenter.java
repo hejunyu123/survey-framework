@@ -42,7 +42,8 @@ public class MultipleChoiceQuestionPresenter
 	 */
 	@Override
 	public void onShow() {	
-		getDisplay().getElementsContainer().clear();
+		while (getDisplay().getElementsContainer().getWidgetCount() > 0) getDisplay().getElementsContainer().remove(0);
+//		getDisplay().getElementsContainer().clear();
 		for (Widget elem :choices.values()) {
 			getDisplay().getElementsContainer().add(elem);
 		}
