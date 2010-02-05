@@ -1,5 +1,6 @@
 package edu.vwa.easyfeedback.server.common.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -8,6 +9,7 @@ import edu.vwa.easyfeedback.client.common.model.FreeTextQuestion;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceOption;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceQuestion;
 import edu.vwa.easyfeedback.client.common.model.Survey;
+import edu.vwa.easyfeedback.client.common.model.SurveyUser;
 import edu.vwa.easyfeedback.client.common.model.YesNoQuestion;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
 
@@ -25,6 +27,22 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 	private static final long serialVersionUID = 8995792040183339359L;
 
 	public Survey getSurvey(String name) {
+		return createNewSampleSurvey();
+	}
+
+	public void saveSurvey(Survey survey) {
+		// TODO Auto-generated method stub
+	}
+
+	public Iterable<Survey> getSurveysByUser(SurveyUser user) {
+		List<Survey> surveys = new ArrayList<Survey>(10);
+		while (surveys.size() < 10)
+			surveys.add(createNewSampleSurvey());
+		return surveys;
+	}
+
+	private Survey createNewSampleSurvey()
+	{
 		Survey sample = new Survey();
 		sample.setCaption("HelloWorld Survey");
 		sample.setDescription("This is just a sample of an survey");
@@ -76,9 +94,9 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 		return sample;
 	}
 
-	public void saveSurvey(Survey survey) {
+	@Override
+	public void deleteSurvey(Survey survey) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
 }

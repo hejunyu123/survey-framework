@@ -40,9 +40,10 @@ public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.D
 			}
 			
 		});
+		loadSurveys(null);
 	}
 	
-	public void loadSurveys(Iterable<Survey> surveys)
+	private void loadSurveys(Iterable<Survey> surveys)
 	{
 		getDisplay().getSurveyOptions().clear();
 		Iterator<Survey> iterator = surveys.iterator();

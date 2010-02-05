@@ -1,6 +1,8 @@
 package edu.vwa.easyfeedback.server.common.service;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.vwa.easyfeedback.client.common.model.Survey;
@@ -37,6 +39,26 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		pm.makePersistent(survey);
 		pm.close();
+	}
+
+	public Iterable<Survey> getSurveysByUser(SurveyUser user) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Iterable<Survey> result = null;
+		try {
+			Query query = pm.newQuery(Survey.class, "user == su");
+			query.declareParameters("edu.vwa.easyfeedback.client.common.model.SurveyUser su");
+			result = (Iterable<Survey>) query.execute(user);
+		}
+		finally {
+			pm.close();
+		}
+		return result;
+	}
+
+	@Override
+	public void deleteSurvey(Survey survey) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
