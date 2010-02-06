@@ -6,7 +6,9 @@ import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.common.presenter.MyPresenter;
 
 /**
- * Presents a question with multiple either exclusive or alternate answering choices. 
+ * Presents a question with multiple either exclusive or alternate answering choices.
+ * This presenter is model-aware, that means you can change the model via {@link #getModel()}
+ * and then call {@link #onShow()} to refresh the view.
  * @author fleerkoetter
  *
  */
@@ -38,6 +40,14 @@ public class MultipleChoiceQuestionPresenter
 	public void onShow() {	
 		
 	}
+	
+	/**
+	 * (Re)loads the current model.
+	 * @see #load(MultipleChoiceQuestion)
+	 */
+	public void load() {
+		load(getModel());
+	}
 
 	/**
 	 * Loads a {@link MultipleChoiceQuestion} and refreshes the display
@@ -56,7 +66,7 @@ public class MultipleChoiceQuestionPresenter
 	}
 	
 	/**
-	 * Add a choice model to the choices
+	 * Add a choice model to the choices. This is only for the view and not synchronized with the model.
 	 * @param choice
 	 */
 	private void addOption(final MultipleChoiceOption choice) {

@@ -17,6 +17,9 @@ public class MultipleChoiceQuestionWidget extends QuestionWidget implements Mult
 		super(factory);
 	}
 
+	/** 
+	 * Adds an option.
+	 */
 	public void addOption(String caption, boolean value, String name, boolean isExclusive) {
 		CheckBox elem; 
 		if (isExclusive) {

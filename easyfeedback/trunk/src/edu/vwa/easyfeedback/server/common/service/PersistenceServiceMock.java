@@ -94,7 +94,6 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 		return sample;
 	}
 
-	@Override
 	public void deleteSurvey(Survey survey) {
 		// TODO Auto-generated method stub
 		

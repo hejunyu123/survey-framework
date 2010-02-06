@@ -55,7 +55,6 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 		return result;
 	}
 
-	@Override
 	public void deleteSurvey(Survey survey) {
 		// TODO Auto-generated method stub
 		

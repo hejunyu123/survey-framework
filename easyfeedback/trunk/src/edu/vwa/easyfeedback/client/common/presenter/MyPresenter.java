@@ -13,7 +13,7 @@ package edu.vwa.easyfeedback.client.common.presenter;
  */
 public abstract class MyPresenter<T extends WidgetDisplay>{
 	
-	private final T display;
+	protected final T display;
 	private EventBus eventBus;
 
 	public MyPresenter(T display, EventBus eventBus) {

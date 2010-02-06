@@ -1,5 +1,7 @@
 package edu.vwa.easyfeedback.client.admin.widget;
 
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -8,6 +10,11 @@ import edu.vwa.easyfeedback.client.common.model.MultipleChoiceOption;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.fillout.widget.MultipleChoiceQuestionPresenter;
 
+/**
+ * A presenter for an editable multiple choice question
+ * @author fleerkoetter
+ *
+ */
 public class EditableMultipleChoiceQuestionPresenter extends MultipleChoiceQuestionPresenter {
 
 	public EditableMultipleChoiceQuestionPresenter(EditableMultipleChoiceQuestionPresenter.Display display,
@@ -27,11 +34,30 @@ public class EditableMultipleChoiceQuestionPresenter extends MultipleChoiceQuest
 				}
 			}
 		});
+		
+		display.getBtnRemoveOption().addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				int removedOptions = 0;
+				for (int idx : getDisplay().getOptionsSelected()) {
+					getDisplay().getElementsContainer().remove(idx-removedOptions);
+					getModel().getOptions().remove(idx);
+					
+					removedOptions++;
+				}
+			}
+			
+		});
 	}
 
 	public interface Display extends MultipleChoiceQuestionPresenter.Display {
 		public HasClickHandlers getBtnAddOption();
-		public int getMaxOptions();
+		public HasClickHandlers getBtnRemoveOption();
+		public List<Integer> getOptionsSelected();
+	}
+	
+	public Display getDisplay() {
+		return (Display) this.display;
 	}
 
 }

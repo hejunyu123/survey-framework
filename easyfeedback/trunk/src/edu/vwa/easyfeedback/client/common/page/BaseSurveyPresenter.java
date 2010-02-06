@@ -148,6 +148,7 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 	public void addQuestion(QuestionPresenter<?, ?> presenter) {
 		getDisplay().getQuestions().add(presenter.getDisplay().asWidget());	
 		presenter.getDisplay().getNumber().setValue(getDisplay().getQuestions().getWidgetIndex(presenter.getDisplay().asWidget()) + 1);
+		presenter.onShow();
 	}
 
 	/**
