@@ -23,6 +23,10 @@
 	margin: 0.5em 0;
 }
 
+.gwt-Survey-Options td {
+	padding: 0.2em;
+}
+
 h3 {
 	text-align: left;
 	font-size: 100%;

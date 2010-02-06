@@ -21,6 +21,7 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 	private final Label lblError = new Label("Test");
 	private final VerticalPanel root = new VerticalPanel();
 	private final VerticalPanel surveys = new VerticalPanel();
+	private final Button newSurveyBtn = new Button("New Survey");
 
 	public SelectSurveyPage() {
 		LoginPresenter login = AdminModuleFactory.get().createLoginWidget();
@@ -30,6 +31,7 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 		root.add(btnSubmit);
 		root.add(lblError);
 		root.add(surveys);
+		root.add(newSurveyBtn);
 		
 		lblError.addStyleName("gwt-Label-Red");
 		
@@ -55,6 +57,11 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 	
 	public HasWidgets getSurveyOptions() {
 		return surveys;
+	}
+
+	@Override
+	public HasClickHandlers getNewSurveyBtn() {
+		return newSurveyBtn;
 	}
 
 }

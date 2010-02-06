@@ -34,7 +34,7 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 		// TODO Auto-generated method stub
 	}
 
-	public Iterable<Survey> getSurveysByUser(SurveyUser user) {
+	public Iterable<Survey> getSurveys() {
 		List<Survey> surveys = new ArrayList<Survey>(10);
 		while (surveys.size() < 10)
 			surveys.add(createNewSampleSurvey());
@@ -97,5 +97,13 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 	public void deleteSurvey(Survey survey) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Survey createSurvey(String caption, String description)
+	{
+		Survey survey = createNewSampleSurvey();
+		survey.setCaption(caption);
+		survey.setDescription(description);
+		return survey;
 	}
 }

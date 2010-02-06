@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -23,6 +24,7 @@ public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.D
 		public HasClickHandlers getBtnSubmit();
 		public void showSubmitError(String errorText);
 		public HasWidgets getSurveyOptions();
+		public HasClickHandlers getNewSurveyBtn();
 	}
 
 	public SelectSurveyPresenter(Display display, EventBus eventBus) {
@@ -40,6 +42,29 @@ public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.D
 			}
 			
 		});
+		AdminModuleFactory.get().getPersistanceService().getSurveys(new AsyncCallback<Iterable<Survey>>() {
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+			public void onSuccess(Iterable<Survey> result) {
+				loadSurveys(result);
+			}
+		});
+		getDisplay().getNewSurveyBtn().addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				AdminModuleFactory.get().getPersistanceService().createSurvey("", "", new AsyncCallback<Survey>(){
+					public void onFailure(Throwable caught) {
+						
+					}
+					public void onSuccess(Survey result) {
+						getEventBus().fireEvent(new ShowSurveyEvent(result.getName()));		
+					}}
+				);
+			}
+			
+		});
 	}
 	
 	private void loadSurveys(Iterable<Survey> surveys)
@@ -53,6 +78,7 @@ public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.D
 			SurveyOptionsPresenter presenter = AdminModuleFactory.get().createSurveyOptionsWidget();
 			presenter.setSurvey(iterator.next());
 			getDisplay().getSurveyOptions().add(presenter.getDisplay().asWidget());
+			presenter.onShow();
 		}
 	}
 

@@ -1,12 +1,18 @@
 package edu.vwa.easyfeedback.server.common.service;
 
+import java.util.Date;
+import java.util.UUID;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.vwa.easyfeedback.client.common.model.Survey;
 import edu.vwa.easyfeedback.client.common.model.SurveyUser;
+import edu.vwa.easyfeedback.client.common.service.NotAuthorizedException;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
 import edu.vwa.easyfeedback.server.common.PMF;
 
@@ -41,23 +47,48 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 		pm.close();
 	}
 
-	public Iterable<Survey> getSurveysByUser(SurveyUser user) {
+	public Iterable<Survey> getSurveys() {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Iterable<Survey> result = null;
-		try {
-			Query query = pm.newQuery(Survey.class, "user == su");
-			query.declareParameters("edu.vwa.easyfeedback.client.common.model.SurveyUser su");
-			result = (Iterable<Survey>) query.execute(user);
+		UserService userService = UserServiceFactory.getUserService();
+		if (userService.isUserLoggedIn())
+		{
+			SurveyUser user = pm.getObjectById(SurveyUser.class, userService.getCurrentUser().getUserId());
+			Iterable<Survey> result = null;
+			try {
+				Query query = pm.newQuery(Survey.class, "user == su");
+				query.declareParameters("edu.vwa.easyfeedback.client.common.model.SurveyUser su");
+				result = (Iterable<Survey>) query.execute(user);
+			}
+			finally {
+				pm.close();
+			}
+			return result;
 		}
-		finally {
-			pm.close();
-		}
-		return result;
+		return null;
 	}
 
 	public void deleteSurvey(Survey survey) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Survey createSurvey(String caption, String description) throws NotAuthorizedException {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		UserService userService = UserServiceFactory.getUserService();
+		if (userService.isUserLoggedIn())
+		{
+			SurveyUser user = pm.getObjectById(SurveyUser.class, userService.getCurrentUser().getUserId());
+			Survey survey = new Survey();
+			survey.setCaption(caption);
+			survey.setCreatedAt(new Date());
+			survey.setDescription(description);
+			survey.setName(UUID.randomUUID().toString());
+			survey.setPublishedAt(null);
+			survey.setUser(user);
+			pm.makePersistent(survey);
+			return survey;
+		}
+		throw new NotAuthorizedException();
 	}
 
 }

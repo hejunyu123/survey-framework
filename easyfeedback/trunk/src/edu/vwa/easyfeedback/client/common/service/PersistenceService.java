@@ -4,7 +4,6 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import edu.vwa.easyfeedback.client.common.model.Survey;
-import edu.vwa.easyfeedback.client.common.model.SurveyUser;
 
 /**
  * Es wäre evtl. eine gute Idee einen generischen Service für Create Read Update Delete zu machen.
@@ -24,7 +23,7 @@ public interface PersistenceService extends RemoteService {
 	 * Loads all surveys owned by a specified user from the datastore.
 	 * @return All surveys owned by the specified user.
 	 */
-	public Iterable<Survey> getSurveysByUser(SurveyUser user);
+	public Iterable<Survey> getSurveys();
 	
 	/**
 	 * Saves or updates a survey to a datastore.
@@ -37,4 +36,11 @@ public interface PersistenceService extends RemoteService {
 	 * @param survey The survey to delete
 	 */
 	public void deleteSurvey(Survey survey);
+	
+	/**
+	 * Creates a new Survey for the current user.
+	 * @param survey The survey to delete
+	 * @throws NotAuthorizedException 
+	 */
+	public Survey createSurvey(String caption, String description) throws NotAuthorizedException;
 }

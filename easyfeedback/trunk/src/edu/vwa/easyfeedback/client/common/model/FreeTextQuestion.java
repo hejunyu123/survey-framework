@@ -31,7 +31,4 @@ public class FreeTextQuestion extends Question {
 	public String getText() {
 		return text;
 	}
-
-	
-	
 }

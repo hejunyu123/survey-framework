@@ -21,6 +21,7 @@ public class SurveyOptionsWidget extends Composite implements SurveyOptionsPrese
 	
 	public SurveyOptionsWidget() {
 		super();
+		root.addStyleName("gwt-Survey-Options ");
 		root.add(lblName);
 		root.add(showLink);
 		root.add(publishLink);

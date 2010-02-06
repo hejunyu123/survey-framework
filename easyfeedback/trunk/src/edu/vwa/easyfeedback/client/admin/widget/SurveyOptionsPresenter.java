@@ -43,7 +43,6 @@ public class SurveyOptionsPresenter extends MyPresenter<SurveyOptionsPresenter.D
 		return "survey-options";
 	}
 
-	@Override
 	public void onShow() {
 		getDisplay().getName().setText(survey.getCaption());
 		
@@ -55,11 +54,17 @@ public class SurveyOptionsPresenter extends MyPresenter<SurveyOptionsPresenter.D
 		
 		getDisplay().getDeleteClickHandlers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				//DialogBox dialog = new DialogBox();
-				//dialog.setTitle("Umfrage lšschen?");
-				//dialog.setText("Mšchten Sie diese Umfrage und alle Antworten lšschen?");
-				//dialog.show();
+				PersistenceServiceAsync db = AdminModuleFactory.get().getPersistanceService();
+				db.deleteSurvey(survey, new AsyncCallback<Void>() {
+
+					public void onFailure(Throwable caught) {
+						onShow();
+					}
+
+					public void onSuccess(Void result) {
+						onShow();
+					}
+				});
 			}
 		});
 		
