@@ -5,13 +5,17 @@ import java.util.Iterator;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 import edu.vwa.easyfeedback.client.admin.AdminModuleFactory;
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyEvent;
+import edu.vwa.easyfeedback.client.admin.service.LoginInfo;
 import edu.vwa.easyfeedback.client.admin.widget.SurveyOptionsPresenter;
+import edu.vwa.easyfeedback.client.common.event.LoginHandler;
 import edu.vwa.easyfeedback.client.common.model.Survey;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.common.presenter.PagePresenter;
@@ -22,9 +26,10 @@ public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.D
 	public interface Display extends WidgetDisplay {
 		public HasValue<String> getIdBox();
 		public HasClickHandlers getBtnSubmit();
-		public void showSubmitError(String errorText);
 		public HasWidgets getSurveyOptions();
 		public HasClickHandlers getNewSurveyBtn();
+		public HasText getErrorText();
+		public void setSurveyBtnVisible(boolean visible);
 	}
 
 	public SelectSurveyPresenter(Display display, EventBus eventBus) {
@@ -33,38 +38,66 @@ public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.D
 	}
 
 	private void init() {
+		AdminModuleFactory.get().getLoginService().login("", new AsyncCallback<LoginInfo>() {
+			public void onFailure(Throwable caught) {
+				
+			}
+			public void onSuccess(LoginInfo result) {
+				loadAdminFeatures(result);
+			}
+		});
+		
+		getEventBus().addHandler(new Type<LoginHandler>(), new LoginHandler(){
+			public void onLoginStatusChanged(LoginInfo loginInfo) {
+				loadAdminFeatures(loginInfo);
+			}});
+		
 		getDisplay().getBtnSubmit().addClickHandler(new ClickHandler() {
-
 			public void onClick(ClickEvent event) {
 				getEventBus().fireEvent(new ShowSurveyEvent(
 						getDisplay().getIdBox().getValue())
 				);				
 			}
+		});
+	}
+	
+	private void loadAdminFeatures(LoginInfo loginInfo)
+	{
+		if (loginInfo.isLoggedIn())
+		{
+			AdminModuleFactory.get().getPersistanceService().getSurveys(new AsyncCallback<Iterable<Survey>>() {
+				public void onFailure(Throwable caught) {
+					
+				}
+				public void onSuccess(Iterable<Survey> result) {
+					loadSurveys(result);
+				}
+			});
 			
-		});
-		AdminModuleFactory.get().getPersistanceService().getSurveys(new AsyncCallback<Iterable<Survey>>() {
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-			public void onSuccess(Iterable<Survey> result) {
-				loadSurveys(result);
-			}
-		});
-		getDisplay().getNewSurveyBtn().addClickHandler(new ClickHandler() {
+			getDisplay().getNewSurveyBtn().addClickHandler(new ClickHandler() {
 
-			public void onClick(ClickEvent event) {
-				AdminModuleFactory.get().getPersistanceService().createSurvey("", "", new AsyncCallback<Survey>(){
-					public void onFailure(Throwable caught) {
-						
-					}
-					public void onSuccess(Survey result) {
-						getEventBus().fireEvent(new ShowSurveyEvent(result.getName()));		
-					}}
-				);
-			}
+				public void onClick(ClickEvent event) {
+					AdminModuleFactory.get().getPersistanceService().createSurvey("", "", new AsyncCallback<Survey>(){
+						public void onFailure(Throwable caught) {
+							
+						}
+						public void onSuccess(Survey result) {
+							getEventBus().fireEvent(new ShowSurveyEvent(result.getName()));		
+						}}
+					);
+				}
+				
+			});
 			
-		});
+			getDisplay().getErrorText().setText("");
+			getDisplay().setSurveyBtnVisible(true);
+		}
+		else
+		{
+			getDisplay().setSurveyBtnVisible(false);
+			loadSurveys(null);
+			getDisplay().getErrorText().setText("Please login first!");
+		}
 	}
 	
 	private void loadSurveys(Iterable<Survey> surveys)

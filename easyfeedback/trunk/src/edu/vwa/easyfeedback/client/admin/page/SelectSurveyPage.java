@@ -3,6 +3,7 @@ package edu.vwa.easyfeedback.client.admin.page;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
@@ -18,7 +19,7 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 	
 	private final Button btnSubmit = new Button("Load or create survey");
 	private final TextBox tbID = new TextBox();
-	private final Label lblError = new Label("Test");
+	private final Label lblError = new Label("");
 	private final VerticalPanel root = new VerticalPanel();
 	private final VerticalPanel surveys = new VerticalPanel();
 	private final Button newSurveyBtn = new Button("New Survey");
@@ -26,7 +27,7 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 	public SelectSurveyPage() {
 		LoginPresenter login = AdminModuleFactory.get().createLoginWidget();
 		root.add(login.getDisplay().asWidget());
-		root.add(new LabelHeading(1, "Please enter survey id:"));
+		root.add(new LabelHeading(1, "Survey Administration"));
 		root.add(tbID);
 		root.add(btnSubmit);
 		root.add(lblError);
@@ -37,6 +38,10 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 		
 		initWidget(root);
 		login.onShow();
+		
+		//## todo: remove if nessecary
+		btnSubmit.setVisible(false);
+		tbID.setVisible(false);
 	}
 	
 	public HasClickHandlers getBtnSubmit() {
@@ -59,9 +64,15 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 		return surveys;
 	}
 
-	@Override
 	public HasClickHandlers getNewSurveyBtn() {
 		return newSurveyBtn;
 	}
 
+	public HasText getErrorText() {
+		return lblError;
+	}
+
+	public void setSurveyBtnVisible(boolean visible) {
+		newSurveyBtn.setVisible(visible);
+	}
 }
