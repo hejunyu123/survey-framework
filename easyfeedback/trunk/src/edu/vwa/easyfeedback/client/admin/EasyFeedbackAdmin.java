@@ -28,7 +28,7 @@ public class EasyFeedbackAdmin implements EntryPoint {
 					FillOutModuleFactory.get().getEventBus().fireEvent(new ShowSurveyEvent(event.getValue()));
 				}
 			}
-		});		
+		});
 		
 		// Show Select Survey page at startup
 		AdminModuleFactory.get().getEventBus().fireEvent(new ShowPageEvent(selectSurvey.getPlace()));

@@ -40,7 +40,6 @@ public class SelectSurveyPresenter extends PagePresenter<SelectSurveyPresenter.D
 			}
 			
 		});
-		loadSurveys(null);
 	}
 	
 	private void loadSurveys(Iterable<Survey> surveys)

@@ -22,11 +22,11 @@ public class LoginWidget extends Composite implements LoginPresenter.Display {
 	private Label caption;
 	private Panel elements;
 	private Panel root;
-	private Button Login;
-	private Button Logout;
+	private Button login;
+	private Button logout;
 	
 	public LoginWidget() {
-		caption = new LabelHeading(2, "%LoginWidget.caption%");
+		caption = new LabelHeading(2, "");
 		elements = new HorizontalPanel();
 		root = new HorizontalPanel();		
 		
@@ -40,11 +40,11 @@ public class LoginWidget extends Composite implements LoginPresenter.Display {
 		
 		initWidget(root);
 		
-		Login = new Button("Login");
-		Logout = new Button("Logout");
+		login = new Button("Login");
+		logout = new Button("Logout");
 		
-		root.add(Login);
-		root.add(Logout);
+		root.add(login);
+		root.add(logout);
 	}
 	
 	protected void construct() {
@@ -57,12 +57,12 @@ public class LoginWidget extends Composite implements LoginPresenter.Display {
 	
 	public HasClickHandlers getBtnLogin() {
 		//Bei Klick Weiterleitung zur LoginUrl
-		return Login;
+		return login;
 	}	
 	
 	public HasClickHandlers getBtnLogout() {
 		//Bei Klick Weiterleitung zur LogoutUrl
-		return Logout;
+		return logout;
 	}
 
 	public Widget asWidget() {
@@ -71,6 +71,16 @@ public class LoginWidget extends Composite implements LoginPresenter.Display {
 
 	public HasWidgets getElementsContainer() {
 		return elements;
+	}
+
+	@Override
+	public void setLoginVisible(boolean visible) {
+		login.setVisible(visible);
+	}
+
+	@Override
+	public void setLogoutVisible(boolean visible) {
+		logout.setVisible(visible);
 	}
 
 }

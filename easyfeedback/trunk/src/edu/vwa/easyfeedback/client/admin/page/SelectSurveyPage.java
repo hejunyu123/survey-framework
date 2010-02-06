@@ -10,6 +10,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import edu.vwa.easyfeedback.client.admin.AdminModuleFactory;
+import edu.vwa.easyfeedback.client.admin.widget.LoginPresenter;
 import edu.vwa.easyfeedback.client.common.widget.LabelHeading;
 
 public class SelectSurveyPage extends Composite implements SelectSurveyPresenter.Display {
@@ -20,7 +22,9 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 	private final VerticalPanel root = new VerticalPanel();
 	private final VerticalPanel surveys = new VerticalPanel();
 
-	public SelectSurveyPage() {		
+	public SelectSurveyPage() {
+		LoginPresenter login = AdminModuleFactory.get().createLoginWidget();
+		root.add(login.getDisplay().asWidget());
 		root.add(new LabelHeading(1, "Please enter survey id:"));
 		root.add(tbID);
 		root.add(btnSubmit);
@@ -30,6 +34,7 @@ public class SelectSurveyPage extends Composite implements SelectSurveyPresenter
 		lblError.addStyleName("gwt-Label-Red");
 		
 		initWidget(root);
+		login.onShow();
 	}
 	
 	public HasClickHandlers getBtnSubmit() {

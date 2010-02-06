@@ -7,11 +7,15 @@ import edu.vwa.easyfeedback.client.admin.page.EditSurveyPage;
 import edu.vwa.easyfeedback.client.admin.page.EditSurveyPresenter;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPage;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPresenter;
+import edu.vwa.easyfeedback.client.admin.service.LoginService;
+import edu.vwa.easyfeedback.client.admin.service.LoginServiceAsync;
 import edu.vwa.easyfeedback.client.admin.widget.EditableFreeTextQuestionPresenter;
 import edu.vwa.easyfeedback.client.admin.widget.EditableFreeTextQuestionWidget;
 import edu.vwa.easyfeedback.client.admin.widget.EditableLabel;
 import edu.vwa.easyfeedback.client.admin.widget.EditableMultipleChoiceQuestionPresenter;
 import edu.vwa.easyfeedback.client.admin.widget.EditableMultipleChoiceQuestionWidget;
+import edu.vwa.easyfeedback.client.admin.widget.LoginPresenter;
+import edu.vwa.easyfeedback.client.admin.widget.LoginWidget;
 import edu.vwa.easyfeedback.client.admin.widget.SelectQuestionTypePresenter;
 import edu.vwa.easyfeedback.client.admin.widget.SelectQuestionTypeWidget;
 import edu.vwa.easyfeedback.client.admin.widget.SurveyOptionsPresenter;
@@ -30,6 +34,7 @@ public class AdminModuleFactory extends QuestionPresenterFactory {
 	
 	private static final AdminModuleFactory instance = new AdminModuleFactory();
 	private static final PersistenceServiceAsync persitanceService = GWT.create(PersistenceService.class);
+	private static final LoginServiceAsync loginService = GWT.create(LoginService.class);
 
 	/**
 	 * Singleton method.
@@ -60,6 +65,10 @@ public class AdminModuleFactory extends QuestionPresenterFactory {
 	public PersistenceServiceAsync getPersistanceService()
 	{
 		return persitanceService;
+	}
+	public LoginServiceAsync getLoginService()
+	{
+		return loginService;
 	}
 	
 	/*
@@ -94,5 +103,10 @@ public class AdminModuleFactory extends QuestionPresenterFactory {
 	
 	public SelectQuestionTypePresenter createSelectQuestionTypeWidget() {
 		return new SelectQuestionTypePresenter(new SelectQuestionTypeWidget(), getEventBus(), this);
+	}
+	
+	public LoginPresenter createLoginWidget()
+	{
+		return new LoginPresenter(new LoginWidget(), getEventBus());
 	}
 }
