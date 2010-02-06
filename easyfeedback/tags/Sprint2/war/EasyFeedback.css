@@ -1,0 +1,55 @@
+/** Add css rules here for your application. */
+
+
+/** Example rules used by the template application (remove for your app) */
+
+h1 {
+	text-align: center;
+	font-size: 170%;
+	font-weight: bold;
+	margin: 0.5em 0;
+}
+
+h2 {
+	text-align: left;
+	font-size: 130%;
+	font-weight: bold;
+	margin: 0.5em 0;
+}
+
+h3 {
+	text-align: left;
+	font-size: 100%;
+	font-weight: bold;
+	margin: 0.5em 0;
+}
+
+/** Widgets **/
+
+.gwt-Label-Notification {
+	color: #AC0C0C;
+	display: none;
+}
+.gwt-Label-Notification .gwt-Label-Notification-Active {
+	display: inline;
+}
+
+.gwt-RadioButton label {
+    margin-left: 5px;
+}
+
+.ef-Survey-Question {
+	padding-bottom:10px;
+	padding-left:10px;
+	padding-top:30px;    
+}
+
+.ef-Survey-Question-Elements {
+    padding-left: 23px;
+}
+
+
+.ef-Survey-Question-Description {
+    padding-left: 23px;
+    padding-bottom: 10px;
+}
