@@ -4,31 +4,21 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
+
+  <servlet>
+    <servlet-name>loginService</servlet-name>
+    <servlet-class>gwttest.server.LoginServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>loginService</servlet-name>
+    <url-pattern>/gwttest/login</url-pattern>
+  </servlet-mapping>
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Gwttest.html</welcome-file>
   </welcome-file-list>
-  
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>persist</servlet-name>
-    <servlet-class>gwttest.server.PersistenceServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet>
-    <servlet-name>loginService</servlet-name>    
-    <servlet-class>gwttest.server.LoginServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>persist</servlet-name>
-    <url-pattern>/gwttest/persist</url-pattern>
-  </servlet-mapping>
-  
-  <servlet-mapping>
-    <servlet-name>loginService</servlet-name>
-    <url-pattern>/gwttest/login</url-pattern>
-  </servlet-mapping>
 
 </web-app>
