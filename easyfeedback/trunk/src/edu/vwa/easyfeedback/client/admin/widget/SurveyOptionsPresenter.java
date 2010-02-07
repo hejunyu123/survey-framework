@@ -5,6 +5,7 @@ import java.util.Date;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
 
@@ -49,6 +50,7 @@ public class SurveyOptionsPresenter extends MyPresenter<SurveyOptionsPresenter.D
 		getDisplay().getShowClickHandlers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				getEventBus().fireEvent(new ShowSurveyEvent(survey.getName()));
+				History.newItem(survey.getName(), false);
 			}
 		});
 		

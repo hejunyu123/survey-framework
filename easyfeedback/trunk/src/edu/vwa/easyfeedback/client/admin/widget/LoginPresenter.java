@@ -36,8 +36,7 @@ public class LoginPresenter extends MyPresenter<LoginPresenter.Display> {
 	}
 
 	public String getPlace() {
-		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	public void onShow() {

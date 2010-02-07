@@ -73,12 +73,10 @@ public class LoginWidget extends Composite implements LoginPresenter.Display {
 		return elements;
 	}
 
-	@Override
 	public void setLoginVisible(boolean visible) {
 		login.setVisible(visible);
 	}
 
-	@Override
 	public void setLogoutVisible(boolean visible) {
 		logout.setVisible(visible);
 	}

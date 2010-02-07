@@ -21,16 +21,24 @@ public class MultipleChoiceQuestionWidget extends QuestionWidget implements Mult
 	 * Adds an option.
 	 */
 	public void addOption(String caption, boolean value, String name, boolean isExclusive) {
-		CheckBox elem; 
-		if (isExclusive) {
-			elem = new RadioButton(name); 
-		} else {
-			elem = new CheckBox();
-			elem.setName(caption);
-		}
+//		CheckBox elem; 
+//		if (isExclusive) {
+//			elem = new RadioButton(name); 
+//		} else {
+//			elem = new CheckBox();
+//			elem.setName(caption);
+//		}
+		CheckBox elem = null;
+		elem = createOptionElem(isExclusive);
+		elem.setName(name);
 		elem.setText(caption);
 		elem.setValue(value);
-		getElementsContainer().add(elem);		
+		getElementsContainer().add(elem);
+		
+	}
+	
+	protected CheckBox createOptionElem(boolean isExclusive) {
+		return isExclusive ? new RadioButton("") : new CheckBox();
 	}
 
 }

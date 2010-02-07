@@ -21,13 +21,13 @@ public abstract class Question extends SurveyElement implements Serializable {
 	private List<Answer> answers;
 	
 	@Persistent
-	private String caption;
+	private String caption = "";
 
 	@Persistent
-	private String description;
+	private String description = "";
 
 	@Persistent
-	private boolean isOptional;
+	private boolean isOptional = false;
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)

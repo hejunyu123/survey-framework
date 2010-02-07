@@ -2,6 +2,7 @@ package edu.vwa.easyfeedback.server.common.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -9,7 +10,6 @@ import edu.vwa.easyfeedback.client.common.model.FreeTextQuestion;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceOption;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceQuestion;
 import edu.vwa.easyfeedback.client.common.model.Survey;
-import edu.vwa.easyfeedback.client.common.model.SurveyUser;
 import edu.vwa.easyfeedback.client.common.model.YesNoQuestion;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
 
@@ -46,7 +46,9 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 		Survey sample = new Survey();
 		sample.setCaption("HelloWorld Survey");
 		sample.setDescription("This is just a sample of an survey");
-		sample.setName("sample");
+		Random rand = new Random();
+		int i = rand.nextInt(99999);
+		sample.setName(String.valueOf(i));
 		
 		// Yes/Np
 		YesNoQuestion yn = new YesNoQuestion();
