@@ -19,9 +19,17 @@ public class SurveyOptionsWidget extends Composite implements SurveyOptionsPrese
 	private Anchor publishLink = new Anchor("Publish");
 	private Hyperlink takeLink = new Hyperlink("Take", "take-survey");
 	
+	public final static String LINKSTYLE = "ef-link";
+	
 	public SurveyOptionsWidget() {
 		super();
+		
 		root.addStyleName("gwt-Survey-Options ");
+		
+		showLink.addStyleName(LINKSTYLE);
+		deleteLink.addStyleName(LINKSTYLE);
+		publishLink.addStyleName(LINKSTYLE);
+		
 		root.add(lblName);
 		root.add(showLink);
 		root.add(publishLink);

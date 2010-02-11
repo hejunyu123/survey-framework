@@ -32,7 +32,11 @@ public class EasyFeedbackFillOut implements EntryPoint {
 			}
 		});
 		
-		History.newItem("sample");
+		// Just for demo purpose
+		History.newItem("sample", false);
+		
+		// If a user accesses the module with a history item (= survey id) directly, make sure that it get's handled here
+		History.fireCurrentHistoryState();
 	}
 
 }

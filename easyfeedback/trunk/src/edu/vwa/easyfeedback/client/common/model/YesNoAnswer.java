@@ -1,5 +1,9 @@
 package edu.vwa.easyfeedback.client.common.model;
 
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
+
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class YesNoAnswer extends Answer {
 	
 	/**

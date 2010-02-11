@@ -5,12 +5,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Survey implements Serializable {
 	private static final long serialVersionUID = 881287580798933082L;
+	
+    @PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
+	private String key;
+	
+    @Persistent
+    @Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
+    private String name;
+	
 
 	@Persistent
 	private String caption;
@@ -23,11 +38,6 @@ public class Survey implements Serializable {
 
 	@Persistent
 	private List<SurveyElement> elements;
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-//	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
-	private String name;
 
 	@Persistent
 	private Date publishedAt;
@@ -46,7 +56,7 @@ public class Survey implements Serializable {
 		this.description = description;
 		this.caption = caption;
 		this.createdAt = new Date();
-		this.name = name;
+		setName(name);
 		this.user = user;
 		
 		this.elements = new ArrayList<SurveyElement>();
@@ -103,7 +113,12 @@ public class Survey implements Serializable {
 	}
 
 
-	public void setName(String name) {
+	/**
+	 * A unique name that identifies this survey.
+	 * IMPORTANT! This property must be set prior to persisting objects.
+	 * @param name
+	 */
+	public void setName(String name) {		
 		this.name = name;
 	}
 

@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class SurveyResponse implements Serializable {
 	private static final long serialVersionUID = 6882694252233011509L;
 

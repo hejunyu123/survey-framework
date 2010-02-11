@@ -10,6 +10,7 @@ import edu.vwa.easyfeedback.client.common.model.FreeTextQuestion;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceOption;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceQuestion;
 import edu.vwa.easyfeedback.client.common.model.Survey;
+import edu.vwa.easyfeedback.client.common.model.SurveyUser;
 import edu.vwa.easyfeedback.client.common.model.YesNoQuestion;
 import edu.vwa.easyfeedback.client.common.service.PersistenceService;
 
@@ -34,11 +35,11 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 		// TODO Auto-generated method stub
 	}
 
-	public Iterable<Survey> getSurveys() {
+	public Survey[] getSurveys() {
 		List<Survey> surveys = new ArrayList<Survey>(10);
 		while (surveys.size() < 10)
 			surveys.add(createNewSampleSurvey());
-		return surveys;
+		return (Survey[]) surveys.toArray();
 	}
 
 	private Survey createNewSampleSurvey()
@@ -107,5 +108,17 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 		survey.setCaption(caption);
 		survey.setDescription(description);
 		return survey;
+	}
+
+	public SurveyUser getSurveyUser(String name) {
+		SurveyUser user = new SurveyUser();
+		user.setEmail("test@example.com");
+//		user.setKey("123");
+		return user;
+	}
+
+	public void saveSurveyUser(SurveyUser user) {
+		// TODO Auto-generated method stub
+		
 	}
 }

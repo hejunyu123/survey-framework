@@ -1,11 +1,15 @@
 package edu.vwa.easyfeedback.client.common.model;
 
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
+
 /**
  * Question which's answering choices are only "Yes" or "No".
  * Type is for definition purpose only.
  * @author fleerkoetter
  *
  */
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class YesNoQuestion extends Question {
 
 	/**

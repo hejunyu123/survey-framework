@@ -81,3 +81,9 @@ h3 {
 .ef-EditableLabel-hover {
 	background-color: yellow;	
 }
+
+.ef-link {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}

@@ -71,7 +71,7 @@ public abstract class Question extends SurveyElement implements Serializable {
 		this.isOptional = isOptional;
 	}
 
-	public void setKey(String key) {
+	private void setKey(String key) {
 		this.key = key;
 	}
 

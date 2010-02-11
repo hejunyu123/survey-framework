@@ -2,17 +2,18 @@ package edu.vwa.easyfeedback.server.common.service;
 
 import java.util.Date;
 
-import junit.framework.TestCase;
 import edu.vwa.easyfeedback.client.common.model.Survey;
 import edu.vwa.easyfeedback.client.common.model.SurveyUser;
+import edu.vwa.easyfeedback.server.common.LocalServiceTestCase;
 
-public class PersistenceServiceImplTest extends TestCase {
+public class PersistenceServiceImplTest extends LocalServiceTestCase {
 	
 	Survey testSurvey;
 	SurveyUser testUser;
 	
 	@Override
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
+		super.setUp();
 		testSurvey = new Survey();
 		testSurvey.setName("uniquename");
 		testSurvey.setCaption("caption");
@@ -21,7 +22,7 @@ public class PersistenceServiceImplTest extends TestCase {
 		
 		testUser = new SurveyUser();
 		testUser.setEmail("testuser@test.de");
-		testUser.setKey("uniquename");
+//		testUser.setKey("uniquename");
 	}
 
 	public void testSaveLoadSurvey() throws Throwable {
@@ -29,20 +30,20 @@ public class PersistenceServiceImplTest extends TestCase {
 		persistenceService.saveSurvey(testSurvey);
 		Survey result = persistenceService.getSurvey("uniquename");
 		assertTrue(
-				result.getCaption() == testSurvey.getCaption()
-				&& result.getCaption() == testSurvey.getCaption()
-				&& result.getCreatedAt() == testSurvey.getCreatedAt()
-				&& result.getDescription() == testSurvey.getDescription()
+				result.getCaption().equals(testSurvey.getCaption())
+//				&& result.getCaption() == testSurvey.getCaption()
+				&& result.getCreatedAt().equals(testSurvey.getCreatedAt())
+				&& result.getDescription().equals(testSurvey.getDescription())
 		);
 	}
 	
 	public void testSaveLoadUser() throws Throwable {
 		PersistenceServiceImpl persistenceService = new PersistenceServiceImpl();
 		persistenceService.saveSurveyUser(testUser);
-		SurveyUser result = persistenceService.getSurveyUser("uniquename");
+		SurveyUser result = persistenceService.getSurveyUser(testUser.getEmail());
 		assertTrue(
-				result.getEmail() == testUser.getEmail()
-				&& result.getKey() == testUser.getKey()
+				result.getEmail().equals(testUser.getEmail())
+//				&& result.getKey().equals(testUser.getKey())
 		);
 	}
 	

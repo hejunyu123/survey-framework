@@ -2,9 +2,12 @@ package edu.vwa.easyfeedback.client.common.page;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.InsertPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyHandler;
 import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
@@ -99,7 +102,9 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 		persistenceService.getSurvey(name, new AsyncCallback<Survey>() {
 
 			public void onFailure(Throwable caught) {
-				
+				//TODO Do serious error handling here
+				RootPanel.get().clear();
+				RootPanel.get().add(new Label(caught.getMessage()));
 			}
 
 			public void onSuccess(Survey result) {
@@ -118,6 +123,12 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 	public void load(Survey model) {
 		setLoading(true);
 		this.currentModel = model;
+		
+		// Make sure that the user recognizes he has the current survey and can use the back button to go whereever he came from
+		if (History.getToken().equals(model.getName())) {
+			History.newItem(model.getName(), false);
+		}
+		
 		try {
 			getDisplay().getCaption().setText(model.getCaption());
 			getDisplay().getDescription().setText(model.getDescription());

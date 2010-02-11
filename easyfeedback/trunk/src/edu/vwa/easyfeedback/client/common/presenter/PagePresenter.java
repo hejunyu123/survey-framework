@@ -14,7 +14,7 @@ import edu.vwa.easyfeedback.client.common.event.ShowPageHandler;
  *
  * @param <T> 
  */
-public abstract class PagePresenter<T extends WidgetDisplay> extends MyPresenter<T> implements ShowPageHandler{
+public abstract class PagePresenter<T extends WidgetDisplay> extends MyPresenter<T> implements ShowPageHandler {
 
 	public PagePresenter(T display, EventBus eventBus) {
 		super(display, eventBus);

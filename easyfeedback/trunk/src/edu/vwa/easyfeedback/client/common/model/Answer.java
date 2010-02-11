@@ -24,7 +24,7 @@ public abstract class Answer implements Serializable {
 		return key;
 	}
 
-	public void setKey(String key) {
+	private void setKey(String key) {
 		this.key = key;
 	}
 }

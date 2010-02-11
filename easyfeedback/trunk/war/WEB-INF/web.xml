@@ -19,8 +19,8 @@
 
   <servlet>
     <servlet-name>persistService</servlet-name>
-     <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceMock</servlet-class>
-    <!--  <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceImpl</servlet-class> -->
+     <!-- <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceMock</servlet-class> -->
+     <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceImpl</servlet-class> 
   </servlet>
   <servlet-mapping>
     <servlet-name>persistService</servlet-name>

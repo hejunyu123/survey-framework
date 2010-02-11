@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class SurveyElement implements Serializable {
 	private static final long serialVersionUID = -8222155757625578310L;
 
@@ -30,7 +33,7 @@ public class SurveyElement implements Serializable {
 		return questions;
 	}
 
-	public void setKey(String key) {
+	private void setKey(String key) {
 		this.key = key;
 	}
 
