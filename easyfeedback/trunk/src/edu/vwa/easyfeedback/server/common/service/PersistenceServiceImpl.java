@@ -104,8 +104,10 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 	 * @see PersistenceService#saveSurvey(Survey)
 	 */
 	public void saveSurvey(Survey survey) throws NotAuthorizedException {
-		saveSurveyInternal(survey);
-
+		try {
+			saveSurveyInternal(survey);
+		} catch (Exception e) {
+		}
 	}
 	
 	private Survey saveSurveyInternal(Survey survey) throws NotAuthorizedException {
@@ -114,6 +116,10 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
+			
+			//TODO Saving elements does not work...
+			survey.getElements().clear();
+			
 			if (survey.getKey() == null) {
 				survey.setKey(KeyFactory.createKeyString(Survey.class.getSimpleName(), survey.getName()));
 			}
@@ -207,12 +213,6 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 			Key key = KeyFactory.createKey(SurveyUser.class.getSimpleName(), userService.getCurrentUser().getEmail());
 			user = pm.getObjectById(SurveyUser.class, key);
 			
-//			Query query = pm.newQuery(SurveyUser.class);
-//			query.setFilter("email == emailParam");
-//			query.declareParameters("String emailParam");
-//			List<SurveyUser> results = (List<SurveyUser>) query.execute(userService.getCurrentUser().getEmail());
-//			user = results.get(0);
-//			
 		} catch (Exception e) {
 			user = new SurveyUser();
 			user.setEmail(userService.getCurrentUser().getEmail());

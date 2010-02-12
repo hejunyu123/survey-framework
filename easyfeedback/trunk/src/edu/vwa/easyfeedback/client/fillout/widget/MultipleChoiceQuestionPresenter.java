@@ -75,8 +75,10 @@ public class MultipleChoiceQuestionPresenter
 	 * @param choice
 	 */
 	private void addOption(final MultipleChoiceOption choice) {
+		boolean isExclusive = model.getMaxOptions() == 1;
+		String name = isExclusive ? model.getOptions().get(0).getName() : choice.getName();
 		((MultipleChoiceQuestionPresenter.Display)getDisplay()).addOption(choice.getCaption(), choice.getValue(),
-				choice.getName(), model.getMaxOptions() == 1);
+				name, model.getMaxOptions() == 1);
 	}		
 	
 	

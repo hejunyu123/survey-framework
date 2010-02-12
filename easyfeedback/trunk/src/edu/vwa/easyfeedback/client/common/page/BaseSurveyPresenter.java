@@ -89,13 +89,8 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 
 	public Survey getModel() {
 		//TODO make dynamic
-//		Survey result = new Survey(currentModel.getName(),
-//				currentModel.getUser(), 
-//				getDisplay().getDescription().getText(), 
-//				getDisplay().getCaption().getText()
-//		);
-//		result.setKey(currentModel.getKey());
-//		return result;
+		currentModel.setCaption(getDisplay().getCaption().getText());
+		currentModel.setDescription(getDisplay().getDescription().getText());
 		return currentModel;
 	}
 
