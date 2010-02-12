@@ -49,7 +49,9 @@ public class PersistenceServiceMock extends RemoteServiceServlet implements
 		sample.setDescription("This is just a sample of an survey");
 		Random rand = new Random();
 		int i = rand.nextInt(99999);
-		sample.setName(String.valueOf(i));
+		String s = String.valueOf(i);
+		sample.setName("sample");
+		sample.setKey(s);
 		
 		// Yes/Np
 		YesNoQuestion yn = new YesNoQuestion();

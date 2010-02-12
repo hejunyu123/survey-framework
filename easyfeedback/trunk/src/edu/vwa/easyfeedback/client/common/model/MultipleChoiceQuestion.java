@@ -14,7 +14,7 @@ public class MultipleChoiceQuestion extends Question {
 	public static final Class<MultipleChoiceOption> OPTION = MultipleChoiceOption.class;
 
 	@Persistent
-	private Integer maxOptions;
+	private int maxOptions = -1;
 
 	@Persistent
 	private List<MultipleChoiceOption> options;
@@ -23,7 +23,7 @@ public class MultipleChoiceQuestion extends Question {
 		this.options = new ArrayList<MultipleChoiceOption>();
 	}
 
-	public Integer getMaxOptions() {
+	public int getMaxOptions() {
 		return maxOptions;
 	}
 

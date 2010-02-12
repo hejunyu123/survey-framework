@@ -14,13 +14,8 @@ public class EasyFeedbackFillOut implements EntryPoint {
 
 	public void onModuleLoad() {
 		final FillOutSurveyPresenter showSurvey = FillOutModuleFactory.get().createFillOutSurveyPage();
-		FillOutModuleFactory.get().getEventBus().addHandler(ShowSurveyEvent.TYPE, showSurvey);
 		
 		// Load the fillout page with the PagePresenter listener function 
-//		pageCollection.addHandler(ValueChangeEvent.getType(), showSurvey);
-//		pageCollection.fireEvent(new ValueChangeEvent<String>(showSurvey.getPlace()) {
-//		});
-//		showSurvey.onShow();
 		
 		// Fire a ShowSurveyEvent for all history changes to use the history tag to show specific surveys by ID
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
@@ -31,9 +26,6 @@ public class EasyFeedbackFillOut implements EntryPoint {
 				}
 			}
 		});
-		
-		// Just for demo purpose
-		History.newItem("sample", false);
 		
 		// If a user accesses the module with a history item (= survey id) directly, make sure that it get's handled here
 		History.fireCurrentHistoryState();

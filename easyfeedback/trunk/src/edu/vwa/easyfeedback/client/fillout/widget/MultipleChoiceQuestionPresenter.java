@@ -1,6 +1,4 @@
-	package edu.vwa.easyfeedback.client.fillout.widget;
-
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
+package edu.vwa.easyfeedback.client.fillout.widget;
 
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceOption;
 import edu.vwa.easyfeedback.client.common.model.MultipleChoiceQuestion;
@@ -26,6 +24,7 @@ public class MultipleChoiceQuestionPresenter
 
 	public MultipleChoiceQuestionPresenter(Display display, EventBus eventBus) {
 		super(display, eventBus);
+		load(new MultipleChoiceQuestion());
 	}
 	
 
@@ -40,7 +39,7 @@ public class MultipleChoiceQuestionPresenter
 	 */
 	@Override
 	public void onShow() {	
-		
+		super.onShow();
 	}
 	
 	/**
@@ -58,7 +57,8 @@ public class MultipleChoiceQuestionPresenter
 	public void load(MultipleChoiceQuestion model) {
 		this.model = model;
 		super.load(model);
-
+		
+		if (model == null) return;
 		try {
 			while (getDisplay().getElementsContainer().getWidgetCount() > 0) getDisplay().getElementsContainer().remove(0);
 		} catch (Exception e) {
@@ -67,7 +67,7 @@ public class MultipleChoiceQuestionPresenter
 			addOption(option);
 		}	
 		
-		onShow();
+//		onShow();
 	}
 	
 	/**

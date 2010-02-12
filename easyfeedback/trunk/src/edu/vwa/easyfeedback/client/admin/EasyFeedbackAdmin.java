@@ -1,15 +1,10 @@
 package edu.vwa.easyfeedback.client.admin;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.client.History;
 
-import edu.vwa.easyfeedback.client.admin.event.ShowSurveyEvent;
 import edu.vwa.easyfeedback.client.admin.page.EditSurveyPresenter;
 import edu.vwa.easyfeedback.client.admin.page.SelectSurveyPresenter;
 import edu.vwa.easyfeedback.client.common.event.ShowPageEvent;
-import edu.vwa.easyfeedback.client.fillout.FillOutModuleFactory;
 
 public class EasyFeedbackAdmin implements EntryPoint {
 

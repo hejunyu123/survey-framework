@@ -22,7 +22,7 @@ public class SurveyUser implements Serializable {
 	private String key;
 
 	@Persistent
-	@Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
+//	@Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
 	private String email = "";
 
 	public String getEmail() {

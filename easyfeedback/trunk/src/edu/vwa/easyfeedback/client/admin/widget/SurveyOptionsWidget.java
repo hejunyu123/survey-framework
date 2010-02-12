@@ -14,7 +14,7 @@ public class SurveyOptionsWidget extends Composite implements SurveyOptionsPrese
 	
 	private Panel root = new HorizontalPanel();
 	private Label lblName = new Label();
-	private Label showLink = new Label("Edit");
+	private Hyperlink showLink = new Hyperlink("Edit", "edit-survey");
 	private Anchor deleteLink = new Anchor("Delete");
 	private Anchor publishLink = new Anchor("Publish");
 	private Hyperlink takeLink = new Hyperlink("Take", "take-survey");

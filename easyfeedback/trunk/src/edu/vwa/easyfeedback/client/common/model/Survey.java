@@ -46,13 +46,13 @@ public class Survey implements Serializable {
 	private List<SurveyResponse> responses;
 
 	@Persistent
-	private SurveyUser user;
+	private String user;
 
 	public Survey() {
 		this("", null, "", "");
 	}
 
-	public Survey(String name, SurveyUser user, String description, String caption) {
+	public Survey(String name, String user, String description, String caption) {
 		this.description = description;
 		this.caption = caption;
 		this.createdAt = new Date();
@@ -92,7 +92,7 @@ public class Survey implements Serializable {
 		return responses;
 	}
 
-	public SurveyUser getUser() {
+	public String getUser() {
 		return user;
 	}
 
@@ -130,7 +130,15 @@ public class Survey implements Serializable {
 		this.responses = responses;
 	}
 
-	public void setUser(SurveyUser user) {
+	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public String getKey() {
+		return key;
 	}
 }

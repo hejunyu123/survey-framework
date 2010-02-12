@@ -31,8 +31,9 @@ public interface PersistenceService extends RemoteService {
 	/**
 	 * Saves or updates a survey to a datastore.
 	 * @param survey The survey to persist
+	 * @throws NotAuthorizedException 
 	 */
-	public void saveSurvey(Survey survey);
+	public void saveSurvey(Survey survey) throws NotAuthorizedException;
 	
 	/**
 	 * Deletes a survey from the datastore.

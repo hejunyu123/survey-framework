@@ -1,6 +1,5 @@
 package edu.vwa.easyfeedback.server.common.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -9,6 +8,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -32,10 +33,16 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 	
 	private static UserService userService = UserServiceFactory.getUserService();
 
+	private PersistenceService mock = new PersistenceServiceMock();
+
 	/**
 	 * @see PersistenceService#getSurvey(String)
 	 */
 	public Survey getSurvey(String name) throws SurveyNotFoundException {
+		if (name.equals("sample")) {
+			return mock.getSurvey(name);
+		}
+		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Survey result = null;
 		try {
@@ -83,6 +90,9 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 	public void saveSurveyUser(SurveyUser user) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
+			if (user.getKey() == null) {
+				user.setKey(KeyFactory.createKeyString(SurveyUser.class.getSimpleName(), user.getEmail()));
+			}
 			pm.makePersistent(user);
 		} finally {
 			pm.close();
@@ -90,15 +100,36 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 	}
 
 	/**
+	 * @throws NotAuthorizedException 
 	 * @see PersistenceService#saveSurvey(Survey)
 	 */
-	public void saveSurvey(Survey survey) {
+	public void saveSurvey(Survey survey) throws NotAuthorizedException {
+		saveSurveyInternal(survey);
+
+	}
+	
+	private Survey saveSurveyInternal(Survey survey) throws NotAuthorizedException {
+		if (!userService.isUserLoggedIn()) 	throw new NotAuthorizedException();
+		// Create survey in an transaction to make sure it's in in the same EntityGroup as the nested SurveyUser
 		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
 		try {
+			if (survey.getKey() == null) {
+				survey.setKey(KeyFactory.createKeyString(Survey.class.getSimpleName(), survey.getName()));
+			}
+			
+			tx.begin();
 			pm.makePersistent(survey);
+			tx.commit();
+			
+			survey = pm.detachCopy(survey);
 		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
 			pm.close();
 		}
+		return survey;
 	}
 
 	/**
@@ -108,64 +139,61 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 	public Survey[] getSurveys() throws NotAuthorizedException {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 //		UserService userService = UserServiceFactory.getUserService();
-		List<Survey> result = new ArrayList<Survey>();
+//		List<Survey> result = new ArrayList<Survey>();
+		Survey[] result = new Survey[0];
 		if (userService.isUserLoggedIn())
 		{
-//			SurveyUser user = pm.getObjectById(SurveyUser.class, userService.getCurrentUser().getEmail());
-			SurveyUser user = getSurveyUserInternal();
+//			SurveyUser user = getSurveyUserInternal();
+			String user = userService.getCurrentUser().getEmail();
 			try {
 				Query query = pm.newQuery(Survey.class);
 				query.setFilter("user == su");
-				query.declareParameters("edu.vwa.easyfeedback.client.common.model.SurveyUser su");
+				query.declareParameters("String su");
 				try {
-					result = (List<Survey>) query.execute(user);
+					List<Survey> serverResult = (List<Survey>) query.execute(user);
+					
+					if (serverResult.size() > 0) {
+						// Detach result list
+						result = new Survey[serverResult.size()+1];
+						for (int i = 0; i < serverResult.size(); i++) {
+							result[i] = pm.detachCopy(serverResult.get(i));
+						}
+						Survey demo = mock.getSurvey("sample");
+						result[result.length-1] = demo;
+						
+					} 
+//					else {
+//						result =  mock.getSurveys();
+//					}
 				} catch (Exception e) {
 				}
-				//TODO Detach result?
 			}
 			finally {
 				pm.close();
 			}
 			
 		}
-		Survey[] test = new Survey[result.size()];
-		return (Survey[]) result.toArray(test);
+		
+		return result;
 	}
 
 	public void deleteSurvey(Survey survey) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public Survey createSurvey(String caption, String description) throws NotAuthorizedException {
-		if (userService.isUserLoggedIn())
-		{
-			SurveyUser user = getSurveyUserInternal();
-			Survey survey = new Survey();
-			survey.setCaption(caption);
-			survey.setCreatedAt(new Date());
-			survey.setDescription(description);
-			survey.setName(UUID.randomUUID().toString());
-			survey.setPublishedAt(null);
-			survey.setUser(user);
-			
-			// Create survey in an transaction to make sure it's in in the same EntityGroup as the nested SurveyUser
-			PersistenceManager pm = PMF.get().getPersistenceManager();
-			Transaction tx = pm.currentTransaction();
-			try {
-				tx.begin();
-				pm.makePersistent(survey);
-				tx.commit();
-				survey = pm.detachCopy(survey);
-		    } finally {
-		        if (tx.isActive()) {
-		            tx.rollback();
-		        }
-		        pm.close();
-		    }
-			return survey;
-		}
-		throw new NotAuthorizedException();
+		if (!userService.isUserLoggedIn()) throw new NotAuthorizedException();
+		
+		Survey survey = new Survey();
+		survey.setCaption(caption);
+		survey.setCreatedAt(new Date());
+		survey.setDescription(description);
+		survey.setName(UUID.randomUUID().toString());
+		survey.setPublishedAt(null);
+//		survey.setUser(user);
+		survey.setUser(userService.getCurrentUser().getEmail());
+
+		return saveSurveyInternal(survey);
 	}
 	
 	private SurveyUser getSurveyUserInternal() throws NotAuthorizedException {
@@ -176,11 +204,19 @@ public class PersistenceServiceImpl extends RemoteServiceServlet implements Pers
 		SurveyUser user = null;
 		PersistenceManager pm = PMF.get().getPersistenceManager(); 
 		try {
-			user = pm.getObjectById(SurveyUser.class, userService.getCurrentUser().getEmail());
+			Key key = KeyFactory.createKey(SurveyUser.class.getSimpleName(), userService.getCurrentUser().getEmail());
+			user = pm.getObjectById(SurveyUser.class, key);
+			
+//			Query query = pm.newQuery(SurveyUser.class);
+//			query.setFilter("email == emailParam");
+//			query.declareParameters("String emailParam");
+//			List<SurveyUser> results = (List<SurveyUser>) query.execute(userService.getCurrentUser().getEmail());
+//			user = results.get(0);
+//			
 		} catch (Exception e) {
 			user = new SurveyUser();
 			user.setEmail(userService.getCurrentUser().getEmail());
-//			saveSurveyUser(user);						
+			//saveSurveyUser(user);						
 		} finally {
 			pm.close();
 		}

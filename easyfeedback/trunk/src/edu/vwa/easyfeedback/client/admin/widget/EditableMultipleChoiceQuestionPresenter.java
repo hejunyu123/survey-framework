@@ -73,10 +73,11 @@ public class EditableMultipleChoiceQuestionPresenter extends MultipleChoiceQuest
 				
 				int removedOptions = 0;
 				for (int idx : getDisplay().getOptionsSelected()) {
-					//getDisplay().getElementsContainer().remove(idx-removedOptions);
-					getModel().getOptions().remove(idx);
-					
-					removedOptions++;
+					try {
+						getModel().getOptions().remove(idx);
+						removedOptions++;
+					} catch (Exception e) {
+					}
 				}
 				load();
 			}

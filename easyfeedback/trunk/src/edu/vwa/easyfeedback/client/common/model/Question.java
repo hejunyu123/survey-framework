@@ -50,7 +50,7 @@ public abstract class Question extends SurveyElement implements Serializable {
 		return description;
 	}
 
-	public Boolean getIsOptional() {
+	public boolean getIsOptional() {
 		//TODO Make all questions required until implemented otherwise
 		return false;
 	}

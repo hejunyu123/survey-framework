@@ -19,13 +19,13 @@ public class MultipleChoiceOption implements Serializable {
 	private String key;
 
 	@Persistent
-	private String name;
+	private String name = "";
 	
 	@Persistent
-	private String caption;
+	private String caption = "";
 
 	@Persistent
-	private boolean value;
+	private boolean value = false;
 	
 	public MultipleChoiceOption() {
 	}

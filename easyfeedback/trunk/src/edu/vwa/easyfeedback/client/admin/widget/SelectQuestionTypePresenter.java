@@ -51,6 +51,7 @@ public class SelectQuestionTypePresenter extends MyPresenter<SelectQuestionTypeP
 					}
 					if (newQuestion != null) {
 						try {
+							target.getModel().getElements().add(newQuestion.getModel());
 							target.addQuestion(newQuestion);
 						} catch (Exception e) {
 						}						

@@ -15,6 +15,7 @@ public class YesNoPresenter extends QuestionPresenter<YesNoPresenter.Display, Ye
 	
 	public YesNoPresenter(final Display display, final EventBus eventBus) {
 		super(display, eventBus);
+		load(new YesNoQuestion());
 	}
 
 	/**
@@ -33,15 +34,16 @@ public class YesNoPresenter extends QuestionPresenter<YesNoPresenter.Display, Ye
 	}
 
 	@Override
-	public void onShow() {
+	public final void load(final YesNoQuestion model) {
+		super.load(model);
 
 	}
 
 	@Override
-	public final void load(final YesNoQuestion model) {
-		super.load(model);
+	public void onShow() {
+		super.onShow();
 		getDisplay().getYes().setValue(model.getIsYes());
-		getDisplay().getNo().setValue(!model.getIsYes());
+		getDisplay().getNo().setValue(!model.getIsYes());	
 	}
 
 }

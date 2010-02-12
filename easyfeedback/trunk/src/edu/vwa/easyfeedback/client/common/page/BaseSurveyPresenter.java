@@ -9,11 +9,11 @@ import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import edu.vwa.easyfeedback.client.admin.event.ShowSurveyEvent;
 import edu.vwa.easyfeedback.client.admin.event.ShowSurveyHandler;
 import edu.vwa.easyfeedback.client.common.QuestionPresenterFactory;
 import edu.vwa.easyfeedback.client.common.model.Question;
 import edu.vwa.easyfeedback.client.common.model.Survey;
-import edu.vwa.easyfeedback.client.common.model.SurveyElement;
 import edu.vwa.easyfeedback.client.common.presenter.EventBus;
 import edu.vwa.easyfeedback.client.common.presenter.PagePresenter;
 import edu.vwa.easyfeedback.client.common.presenter.WidgetDisplay;
@@ -38,16 +38,19 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 		init();
 		
 		// Handle show survey events
-//		getEventBus().addHandler(ShowSurveyEvent.TYPE, new ShowSurveyHandler() {
-//
-//			/**
-//			 * Handles the Show Survey event.
-//			 * Reads the specified survey via the persistence service and causes the 
-//			 * History to show the suvey view.
-//			 */
-//
-//
-//		});		
+		getEventBus().addHandler(ShowSurveyEvent.TYPE, new ShowSurveyHandler() {
+
+			/**
+			 * Handles the Show Survey event.
+			 * Reads the specified survey via the persistence service and causes the 
+			 * History to show the suvey view.
+			 */
+			public void onShowSurvey(String surveyID) {
+				load(surveyID);
+				onShow();
+			}
+
+		});		
 	}
 
 	public interface Display extends WidgetDisplay {
@@ -84,13 +87,16 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 		getDisplay().getDescription().setText("%description%");
 	}
 
-	private Survey toSurveyModel() {
+	public Survey getModel() {
 		//TODO make dynamic
-		return new Survey(currentModel.getName(),
-				currentModel.getUser(), 
-				getDisplay().getDescription().getText(), 
-				getDisplay().getCaption().getText()
-		);
+//		Survey result = new Survey(currentModel.getName(),
+//				currentModel.getUser(), 
+//				getDisplay().getDescription().getText(), 
+//				getDisplay().getCaption().getText()
+//		);
+//		result.setKey(currentModel.getKey());
+//		return result;
+		return currentModel;
 	}
 
 	/**
@@ -103,6 +109,7 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 
 			public void onFailure(Throwable caught) {
 				//TODO Do serious error handling here
+				setLoading(false);
 				RootPanel.get().clear();
 				RootPanel.get().add(new Label(caught.getMessage()));
 			}
@@ -124,21 +131,17 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 		setLoading(true);
 		this.currentModel = model;
 		
-		// Make sure that the user recognizes he has the current survey and can use the back button to go whereever he came from
-		if (History.getToken().equals(model.getName())) {
-			History.newItem(model.getName(), false);
-		}
-		
 		try {
 			getDisplay().getCaption().setText(model.getCaption());
 			getDisplay().getDescription().setText(model.getDescription());
 
 			while (getDisplay().getQuestions().getWidgetCount() > 0 ) getDisplay().getQuestions().remove(0);
 
-			for (SurveyElement elem : model.getElements()) {
+			//for (SurveyElement elem : model.getElements()) {
+			for (int i = 0; i < model.getElements().size(); i++) {
 				try {
 					// Get presenter for model
-					Question question = (Question)elem;
+					Question question = (Question)model.getElements().get(i);
 					QuestionPresenter<QuestionPresenter.Display, Question> presenter
 					= (QuestionPresenter<QuestionPresenter.Display, Question>) getFactory().createPresenterFor(question.getClass());
 					
@@ -152,11 +155,16 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 			} 
 		}
 		finally {
+			// Make sure that the user recognizes he has the current survey and can use the back button to go whereever he came from
+			if (History.getToken().equals(model.getName())) {
+				History.newItem(model.getName(), false);
+			}
 			setLoading(false);
 		}
 	}
 	
 	public void addQuestion(QuestionPresenter<?, ?> presenter) {
+//		currentModel.getElements().add(presenter.getModel());
 		getDisplay().getQuestions().add(presenter.getDisplay().asWidget());	
 		presenter.getDisplay().getNumber().setValue(getDisplay().getQuestions().getWidgetIndex(presenter.getDisplay().asWidget()) + 1);
 		presenter.onShow();
@@ -166,7 +174,7 @@ public abstract class BaseSurveyPresenter<T extends BaseSurveyPresenter.Display>
 	 * @see gwttest.client.samplesurvey.PersistsSurvey#save()
 	 */
 	public void save(){
-		persistenceService.saveSurvey(toSurveyModel(), null);
+		persistenceService.saveSurvey(getModel(), null);
 	}	
 	
 	public String getPlace() {

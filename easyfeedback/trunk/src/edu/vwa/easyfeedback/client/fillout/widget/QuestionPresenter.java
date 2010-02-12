@@ -55,6 +55,8 @@ public abstract class QuestionPresenter<T extends QuestionPresenter.Display, M e
 		HasValue<Boolean> getIsOptional();
 	}
 
+	protected M model;
+
 	public QuestionPresenter(T display, EventBus eventBus) {
 		super(display, eventBus);
 	}
@@ -62,18 +64,26 @@ public abstract class QuestionPresenter<T extends QuestionPresenter.Display, M e
 	/**
 	 * Writes the data from a correspondent model class to the view.
 	 * For concrete question type widgets, override this method and call super.load in the first place!
+	 * Calls onShow()
 	 * @param model The data instance
 	 */
 	public void load(M model) {
-		getDisplay().getDescription().setText(model.getDescription());
-		getDisplay().getCaption().setText(model.getCaption());
-		getDisplay().getIsOptional().setValue(model.getIsOptional());
+		this.model = model;
+		onShow();
 	}	
+	
+	public M getModel() {
+		return model ;
+	}
 
 	@Override
 	public abstract String getPlace();
 
 	@Override
-	public abstract void onShow();
+	public void onShow() {
+		getDisplay().getDescription().setText(model.getDescription());
+		getDisplay().getCaption().setText(model.getCaption());
+		getDisplay().getIsOptional().setValue(model.getIsOptional());
+	}
 
 }
