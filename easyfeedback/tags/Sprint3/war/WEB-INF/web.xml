@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  
+  <!-- Servlets 
+  <servlet>
+    <servlet-name>greetServlet</servlet-name>
+    <servlet-class>edu.vwa.easyfeedback.server.GreetingServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>greetServlet</servlet-name>
+    <url-pattern>/easyfeedback/greet</url-pattern>
+  </servlet-mapping>
+  -->
+
+  <servlet>
+    <servlet-name>persistService</servlet-name>
+     <!-- <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceMock</servlet-class> -->
+     <servlet-class>edu.vwa.easyfeedback.server.common.service.PersistenceServiceImpl</servlet-class> 
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>persistService</servlet-name>
+    <url-pattern>/admin/persist</url-pattern>
+  </servlet-mapping>   
+  <servlet-mapping>
+    <servlet-name>persistService</servlet-name>
+    <url-pattern>/take/persist</url-pattern>
+  </servlet-mapping>  
+  
+   <servlet>
+    <servlet-name>loginService</servlet-name>
+    <servlet-class>edu.vwa.easyfeedback.server.admin.service.LoginServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>loginService</servlet-name>
+    <url-pattern>/admin/login</url-pattern>
+  </servlet-mapping> 
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>EasyFeedback.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>
